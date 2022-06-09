@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PostState, GlobalPosts } from "../types/posts";
+import { PostState, Post } from "../types/posts";
 
 const initialState: PostState = {
   globalPosts: {},
@@ -10,10 +10,13 @@ const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    updateGlobalPosts: (state, action: PayloadAction<GlobalPosts>) => {
+    updateGlobalPosts: (state, action: PayloadAction<Record<string, Post>>) => {
       return {
         ...state,
-        globalPosts: action.payload,
+        globalPosts: {
+          ...state.globalPosts,
+          ...action.payload,
+        },
       };
     },
     udpateVisiblePostIds: (state, action: PayloadAction<string[]>) => {

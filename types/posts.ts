@@ -9,11 +9,7 @@ export type Post = {
   image?: string; // image path
 };
 
-export type GlobalPosts = {
-  [id: string]: Post;
-};
-
 export type PostState = {
-  globalPosts: GlobalPosts;
+  globalPosts: Record<string, Post>;
   visiblePostIds: string[];
 };
