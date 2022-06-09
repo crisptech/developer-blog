@@ -16,17 +16,20 @@ export const combinedReducer = combineReducers({
   posts: postsReducer,
 });
 
-export const rootReducer = (
-  state: CombinedState<{ search: SearchState; posts: PostState }>,
-  action: AnyAction
-) => {
+type State = {
+  search: SearchState;
+  posts: PostState;
+};
+
+// https://stackoverflow.com/questions/64139344/how-to-use-typescript-next-redux-wrapper-getserversideprops
+export const rootReducer = (state: State | undefined, action: AnyAction) => {
   if (action.type === HYDRATE) {
     const nextState = {
       ...state,
       ...action.payload,
     };
-    if (state.search) nextState.search = state.search;
-    if (state.posts) nextState.posts = state.posts;
+    if (state?.search) nextState.search = state.search;
+    if (state?.posts) nextState.posts = state.posts;
     return nextState;
   } else {
     return combinedReducer(state, action);
