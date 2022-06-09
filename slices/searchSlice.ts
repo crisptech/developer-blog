@@ -1,22 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SortType } from "../sort/sortTypes";
-
-type SearchState = {
-  searchTerm: string;
-  filters: {
-    tags: {
-      globalTags: string[];
-      filterTags: string[];
-    };
-  };
-  sort: {
-    /**
-     * ascending: true, descending: false
-     */
-    sortOrder: boolean;
-    sortType: SortType;
-  };
-};
+import { SortType } from "../types/sort";
+import { SearchState } from "../types/search";
 
 const initialState: SearchState = {
   searchTerm: "",
