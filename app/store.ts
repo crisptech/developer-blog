@@ -24,7 +24,7 @@ const store = configureStore({
     posts: {
       globalPosts: {
         test: {
-          date: new Date(),
+          date: "14/06/2022",
           description: "test1",
           filePath: "",
           id: "test",

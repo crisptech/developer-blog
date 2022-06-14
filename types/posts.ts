@@ -4,7 +4,7 @@ export type Post = {
   tags: string[];
   description: string;
   filePath: string;
-  date: Date;
+  date: string;
   category?: string;
   image?: string; // image path
 };

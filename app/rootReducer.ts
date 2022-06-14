@@ -1,10 +1,4 @@
-import {
-  AnyAction,
-  CombinedState,
-  combineReducers,
-  EmptyObject,
-  Reducer,
-} from "redux";
+import { AnyAction, combineReducers } from "redux";
 import searchReducer from "../slices/searchSlice";
 import postsReducer from "../slices/postsSlice";
 import { HYDRATE } from "next-redux-wrapper";
