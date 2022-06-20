@@ -32,12 +32,8 @@ const Home: NextPage = () => {
       <Typography>Color theme component</Typography>
       <Button onClick={colorTheme.toggleColorMode}>toggle colors</Button>
       <Paper>
-        <Typography variant="h1">Testing 2</Typography>
-        <Box>
-          <Typography> Testing 1</Typography>
-          <span>This is a test of a span element</span>
-          <Checkbox />
-        </Box>
+        <Typography variant="h1">Mui h1</Typography>
+        <Box></Box>
       </Paper>
     </div>
   );

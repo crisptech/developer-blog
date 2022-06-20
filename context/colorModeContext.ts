@@ -1,5 +1,4 @@
-import { createContext, SetStateAction } from "react";
-import { PaletteType } from "../types/theme";
+import { createContext } from "react";
 
 type ColorModeContextType = {
   toggleColorMode: () => void;

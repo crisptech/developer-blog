@@ -2,13 +2,11 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { wrapper } from "../app/store";
 import { useMemo, useState } from "react";
-import { amber, blueGrey, deepOrange, grey, pink } from "@mui/material/colors";
+import { blueGrey, grey } from "@mui/material/colors";
 import {
   createTheme,
   CssBaseline,
-  darkScrollbar,
   ThemeProvider,
-  ThemeOptions,
   AppBar,
   responsiveFontSizes,
   Typography,
@@ -17,15 +15,6 @@ import { ColorModeContext } from "../context/colorModeContext";
 import { PaletteType } from "../types/theme";
 
 const getDesignTokens = (mode: PaletteType) => ({
-  components: {
-    // MuiAppBar: {
-    //   styleOverrides: {
-    //     colorPrimary: {
-    //       backgroundColor: "pink",
-    //     },
-    //   },
-    // },
-  },
   typography: {
     fontFamily: ["Poppins, Montserrat"],
   },
@@ -77,7 +66,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <AppBar position="static" enableColorOnDark color="primary">
-          <Typography>test</Typography>
+          <Typography>mui app bar</Typography>
         </AppBar>
         <CssBaseline />
         <Component {...pageProps} />)
