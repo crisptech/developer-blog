@@ -18,4 +18,6 @@ export type Post = {
   id: string;
   date: string;
   content: string;
+  title: string;
+  description: string;
 };

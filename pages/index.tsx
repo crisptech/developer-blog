@@ -1,19 +1,18 @@
-import type { GetStaticPropsContext, NextPage, PreviewData } from "next";
+import type { NextPage } from "next";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Home.module.css";
 import { updateSearchTerm } from "../slices/searchSlice";
 import { selectSearchTerm } from "../selectors/selectSearchTerm";
-import { Button, Checkbox, Paper, Typography, useTheme } from "@mui/material";
+import { Button, Paper, Typography } from "@mui/material";
 import { ColorModeContext } from "../context/colorModeContext";
-import { Box } from "@mui/system";
-import { getAllPostIds, getAllPostsData, postsToRecords } from "../lib/posts";
+import { getAllPostsData, postsToRecords } from "../lib/posts";
 import { wrapper } from "../app/store";
 import { udpateVisiblePostIds, updateGlobalPosts } from "../slices/postsSlice";
-import { selectGlobalPosts } from "../selectors/selectGlobalPosts";
 import { selectVisiblePostIds } from "../selectors/selectVisiblePostIds";
 import { selectVisiblePosts } from "../selectors/selectVisiblePosts";
 import Link from "next/link";
+import BlogTimeline from "../components/blog-timeline";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
@@ -48,6 +47,7 @@ const Home: NextPage = () => {
           <Link href={`/posts/${id}`}>{id}</Link>
         ))}
       </Paper>
+      <BlogTimeline posts={posts} />
     </div>
   );
 };

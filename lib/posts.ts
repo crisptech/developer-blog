@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import { indexBy, prop } from "ramda";
 import { Post } from "../types/posts";
+import Error from "next/error";
 
 const filesPath = path.join("public", "posts");
 
@@ -50,10 +51,19 @@ export const getPostData = (id: string): Post => {
 
   const matterOfFile = matter(fileData);
   console.log(matterOfFile);
+  try {
+    return {
+      id,
+      date: valueIfExists(matterOfFile.data.date),
+      title: valueIfExists(matterOfFile.data.title),
+      description: valueIfExists(matterOfFile.data.description),
+      content: valueIfExists(matterOfFile.data.content),
+    };
+  } catch (error) {
+    throw Error;
+  }
+};
 
-  return {
-    id,
-    date: matterOfFile.data.date,
-    content: matterOfFile.content,
-  };
+const valueIfExists = (value: string | null) => {
+  return value ? value : "";
 };

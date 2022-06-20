@@ -1,6 +1,7 @@
 ---
 title: First Post
-date: 20/06/2022
+date: 01/04/2022
+description: This post is about the first post, placeholder for testing.
 ---
 
 First Post
