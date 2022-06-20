@@ -21,11 +21,14 @@ import { selectVisiblePosts } from "../lib/selectors/selectVisiblePosts";
 import Link from "next/link";
 import BlogTimeline from "../components/blog-timeline";
 import ColorModeSwitch from "../components/color-mode-switch";
+import SortOrderSwitch from "../components/sort-order-switch";
+import { selectSortOrder } from "../lib/selectors/selectSortOrder";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
   const [count, setCount] = useState(0);
   const searchTerm = useSelector(selectSearchTerm);
+  const sortOrder = useSelector(selectSortOrder);
   const posts = useSelector(selectVisiblePosts);
   const postsIds = useSelector(selectVisiblePostIds);
   const colorTheme = useContext(ColorModeContext);
@@ -33,6 +36,11 @@ const Home: NextPage = () => {
   useEffect(() => {
     dispatch(updateSearchTerm("mwuaha"));
   }, []);
+
+  useEffect(() => {
+    const reversePostIds = [...postsIds].reverse();
+    dispatch(udpateVisiblePostIds(reversePostIds));
+  }, [sortOrder]);
 
   function handleClick(
     event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
@@ -47,6 +55,7 @@ const Home: NextPage = () => {
       <Button onClick={handleClick}>increment search term</Button>
       <Typography>Color theme component</Typography>
       <ColorModeSwitch onClick={colorTheme.toggleColorMode} />
+      <SortOrderSwitch />
       <Paper>
         <Typography variant="h1">Mui h1</Typography>
       </Paper>

@@ -69,7 +69,12 @@ const searchSlice = createSlice({
   },
 });
 
-export const { updateSearchTerm, updateGlobalTags, updateFilteredTags } =
-  searchSlice.actions;
+export const {
+  updateSearchTerm,
+  updateGlobalTags,
+  updateFilteredTags,
+  updateSortOrder,
+  updateSortType,
+} = searchSlice.actions;
 
 export default searchSlice.reducer;
