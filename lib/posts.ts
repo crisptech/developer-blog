@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { indexBy, prop } from "ramda";
-import { Post } from "../types/posts";
+import { Post } from "./types/posts";
 import Error from "next/error";
 
 const filesPath = path.join("public", "posts");
@@ -37,7 +37,7 @@ export const getSortedPostIds = (unsortedPosts: Post[]): string[] => {
   const allSortedPosts = [...unsortedPosts].sort((postA, postB) => {
     const dateA: Date = new Date(postA.date);
     const dateB: Date = new Date(postB.date);
-    return dateA < dateB ? -1 : 1;
+    return dateA < dateB ? 1 : -1;
   });
 
   return allSortedPosts.map((post) => post.id);
@@ -56,6 +56,7 @@ export const getPostData = (id: string): Post => {
       title: valueIfExists(matterOfFile.data.title),
       description: valueIfExists(matterOfFile.data.description),
       content: valueIfExists(matterOfFile.data.content),
+      duration: valueIfExists(matterOfFile.data.duration),
     };
   } catch (error) {
     throw Error;

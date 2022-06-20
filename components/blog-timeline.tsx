@@ -8,7 +8,7 @@ import TimelineDot from "@mui/lab/TimelineDot";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import { Typography } from "@mui/material";
 import { format } from "date-fns";
-import { Post } from "../types/posts";
+import { Post } from "../lib/types/posts";
 import Link from "next/link";
 
 type BlogTimeLineProps = {
@@ -26,7 +26,8 @@ const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
           return (
             <TimelineItem>
               <TimelineOppositeContent color="text.secondary">
-                {formattedDate}
+                {`${formattedDate}`}{" "}
+                {post.duration ? `,   ${post.duration}` : ""}
               </TimelineOppositeContent>
               {index < posts.length - 1 ? (
                 <TimelineSeparator>

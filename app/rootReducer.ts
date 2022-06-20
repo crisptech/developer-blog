@@ -1,9 +1,9 @@
 import { AnyAction, combineReducers } from "redux";
-import searchReducer from "../slices/searchSlice";
-import postsReducer from "../slices/postsSlice";
+import searchReducer from "../lib/slices/searchSlice";
+import postsReducer from "../lib/slices/postsSlice";
 import { HYDRATE } from "next-redux-wrapper";
-import { SearchState } from "../types/search";
-import { PostState } from "../types/posts";
+import { SearchState } from "../lib/types/search";
+import { PostState } from "../lib/types/posts";
 
 export const combinedReducer = combineReducers({
   search: searchReducer,

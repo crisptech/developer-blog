@@ -2,8 +2,8 @@ import type { NextPage } from "next";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Home.module.css";
-import { updateSearchTerm } from "../slices/searchSlice";
-import { selectSearchTerm } from "../selectors/selectSearchTerm";
+import { updateSearchTerm } from "../lib/slices/searchSlice";
+import { selectSearchTerm } from "../lib/selectors/selectSearchTerm";
 import { Button, Paper, Typography } from "@mui/material";
 import { ColorModeContext } from "../context/colorModeContext";
 import {
@@ -12,11 +12,15 @@ import {
   postsToRecords,
 } from "../lib/posts";
 import { wrapper } from "../app/store";
-import { udpateVisiblePostIds, updateGlobalPosts } from "../slices/postsSlice";
-import { selectVisiblePostIds } from "../selectors/selectVisiblePostIds";
-import { selectVisiblePosts } from "../selectors/selectVisiblePosts";
+import {
+  udpateVisiblePostIds,
+  updateGlobalPosts,
+} from "../lib/slices/postsSlice";
+import { selectVisiblePostIds } from "../lib/selectors/selectVisiblePostIds";
+import { selectVisiblePosts } from "../lib/selectors/selectVisiblePosts";
 import Link from "next/link";
 import BlogTimeline from "../components/blog-timeline";
+import ColorModeSwitch from "../components/color-mode-switch";
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
@@ -42,7 +46,7 @@ const Home: NextPage = () => {
       {searchTerm}
       <Button onClick={handleClick}>increment search term</Button>
       <Typography>Color theme component</Typography>
-      <Button onClick={colorTheme.toggleColorMode}>toggle colors</Button>
+      <ColorModeSwitch onClick={colorTheme.toggleColorMode} />
       <Paper>
         <Typography variant="h1">Mui h1</Typography>
       </Paper>

@@ -20,4 +20,5 @@ export type Post = {
   content: string;
   title: string;
   description: string;
+  duration?: string;
 };

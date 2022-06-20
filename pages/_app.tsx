@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { ColorModeContext } from "../context/colorModeContext";
-import { PaletteType } from "../types/theme";
+import { PaletteType } from "../lib/types/theme";
 
 const getDesignTokens = (mode: PaletteType) => ({
   typography: {
