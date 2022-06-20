@@ -22,8 +22,8 @@ export const rootReducer = (state: State | undefined, action: AnyAction) => {
       ...state,
       ...action.payload,
     };
-    if (state?.search) nextState.search = state.search;
-    if (state?.posts) nextState.posts = state.posts;
+    // if (state?.search) nextState.search = state.search;
+    // if (state?.posts) nextState.posts = state.posts;
     return nextState;
   } else {
     return combinedReducer(state, action);

@@ -1,4 +1,3 @@
-import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { wrapper } from "../app/store";
 import { useMemo, useState } from "react";
@@ -69,7 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Typography>mui app bar</Typography>
         </AppBar>
         <CssBaseline />
-        <Component {...pageProps} />)
+        <Component {...pageProps} />
       </ThemeProvider>
     </ColorModeContext.Provider>
   );
