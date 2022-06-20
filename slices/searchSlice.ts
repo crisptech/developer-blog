@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SortType } from "../types/sort";
+import { SortOrder, SortType } from "../types/sort";
 import { SearchState } from "../types/search";
 
 const initialState: SearchState = {
@@ -11,7 +11,7 @@ const initialState: SearchState = {
     },
   },
   sort: {
-    sortOrder: true,
+    sortOrder: "ASCENDING",
     sortType: "DATE",
   },
 };
@@ -48,7 +48,7 @@ const searchSlice = createSlice({
         },
       };
     },
-    updateSortOrder: (state, action: PayloadAction<boolean>) => {
+    updateSortOrder: (state, action: PayloadAction<SortOrder>) => {
       return {
         ...state,
         sort: {

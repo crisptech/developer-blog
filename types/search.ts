@@ -1,4 +1,4 @@
-import { SortType } from "./sort";
+import { SortOrder as SortOrder, SortType } from "./sort";
 
 export type SearchState = {
   searchTerm: string;
@@ -9,10 +9,7 @@ export type SearchState = {
     };
   };
   sort: {
-    /**
-     * ascending: true, descending: false
-     */
-    sortOrder: boolean;
+    sortOrder: SortOrder;
     sortType: SortType;
   };
 };

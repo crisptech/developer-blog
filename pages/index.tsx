@@ -6,7 +6,11 @@ import { updateSearchTerm } from "../slices/searchSlice";
 import { selectSearchTerm } from "../selectors/selectSearchTerm";
 import { Button, Paper, Typography } from "@mui/material";
 import { ColorModeContext } from "../context/colorModeContext";
-import { getAllPostsData, postsToRecords } from "../lib/posts";
+import {
+  getAllPostsData,
+  getSortedPostIds,
+  postsToRecords,
+} from "../lib/posts";
 import { wrapper } from "../app/store";
 import { udpateVisiblePostIds, updateGlobalPosts } from "../slices/postsSlice";
 import { selectVisiblePostIds } from "../selectors/selectVisiblePostIds";
@@ -57,8 +61,8 @@ export const getStaticProps = wrapper.getStaticProps(
     const posts = await getAllPostsData();
     const postsRecords = postsToRecords(posts);
     await store.dispatch(updateGlobalPosts(postsRecords));
-    const postsIds = Object.keys(postsRecords);
-    await store.dispatch(udpateVisiblePostIds(postsIds));
+    const sortedPostIds = getSortedPostIds(posts);
+    await store.dispatch(udpateVisiblePostIds(sortedPostIds));
 
     return {
       props: {},

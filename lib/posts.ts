@@ -19,18 +19,6 @@ export const getAllPostIds = async () => {
   });
 };
 
-type PostIdParams = {
-  params: {
-    id: string;
-  };
-};
-
-export const getAllPostIdsAsStrings = (postIdsObjs: PostIdParams[]) => {
-  return postIdsObjs.map((postId) => {
-    return postId.params.id;
-  });
-};
-
 export const postsToRecords = (posts: Post[]): Record<string, Post> => {
   return indexBy(prop("id"), posts);
 };
@@ -45,12 +33,22 @@ export const getAllPostsData = async (): Promise<Post[]> => {
   return allPosts;
 };
 
+export const getSortedPostIds = (unsortedPosts: Post[]): string[] => {
+  const allSortedPosts = [...unsortedPosts].sort((postA, postB) => {
+    const dateA: Date = new Date(postA.date);
+    const dateB: Date = new Date(postB.date);
+    return dateA < dateB ? -1 : 1;
+  });
+
+  return allSortedPosts.map((post) => post.id);
+};
+
 export const getPostData = (id: string): Post => {
   const postPath = path.join(filesPath, `${id}.md`);
   const fileData = fs.readFileSync(postPath, "utf-8");
 
   const matterOfFile = matter(fileData);
-  console.log(matterOfFile);
+
   try {
     return {
       id,

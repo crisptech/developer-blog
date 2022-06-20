@@ -17,7 +17,7 @@ const store = configureStore({
         },
       },
       sort: {
-        sortOrder: false,
+        sortOrder: "ASCENDING",
         sortType: "DATE",
       },
     },

@@ -11,3 +11,5 @@ export const sortTypesToNum = {
   DURATION: 1,
   TITLE: 2,
 };
+
+export type SortOrder = "ASCENDING" | "DESCENDING";
