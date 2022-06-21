@@ -15,15 +15,25 @@ type State = {
   posts: PostState;
 };
 
-// https://stackoverflow.com/questions/64139344/how-to-use-typescript-next-redux-wrapper-getserversideprops
 export const rootReducer = (state: State | undefined, action: AnyAction) => {
   if (action.type === HYDRATE) {
-    const nextState = {
-      ...state,
-      ...action.payload,
-    };
-    // if (state?.search) nextState.search = state.search;
-    // if (state?.posts) nextState.posts = state.posts;
+    const clientState = { ...state };
+    const serverState = { ...action.payload };
+    let nextState: State = { ...clientState, ...serverState };
+
+    // All store data within search is persisted during hydration
+    // enabling client data to be persisted during site wide navigation
+    if (state) {
+      nextState = {
+        ...clientState,
+        ...serverState,
+        search: {
+          ...serverState.search,
+          ...state.search,
+        },
+      };
+    }
+
     return nextState;
   } else {
     return combinedReducer(state, action);

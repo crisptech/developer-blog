@@ -2,6 +2,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SortOrder, SortType } from "../types/sort";
 import { SearchState } from "../types/search";
 
+// TODO: Implement search term functionality,
+// TODO: Implement filter - tags functionality, create chip list under description
+// TODO: Create combo box for the sort type functionality
+// TODO: Integrate sort order functionality with sort type functionality
 const initialState: SearchState = {
   searchTerm: "",
   filters: {

@@ -1,7 +1,8 @@
 import { Switch } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { PaletteType } from "../lib/types/theme";
 
-const ColorModeSwitch = styled(Switch)(({ theme }) => ({
+const StyledThemeSwitch = styled(Switch)(({ theme }) => ({
   width: 51,
   height: 35,
   padding: 7,
@@ -49,5 +50,22 @@ const ColorModeSwitch = styled(Switch)(({ theme }) => ({
     borderRadius: 20 / 2,
   },
 }));
+
+type ColorModeSwitchProps = {
+  toggleColorMode: () => void;
+  colorMode: PaletteType;
+};
+
+const ColorModeSwitch: React.FC<ColorModeSwitchProps> = ({
+  toggleColorMode,
+  colorMode,
+}) => {
+  return (
+    <StyledThemeSwitch
+      onClick={toggleColorMode}
+      checked={colorMode === "light" ? false : true}
+    />
+  );
+};
 
 export default ColorModeSwitch;

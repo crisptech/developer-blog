@@ -54,8 +54,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           prevMode === "light" ? "dark" : "light"
         );
       },
+      colorMode: mode,
     }),
-    []
+    [mode]
   );
 
   let theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);

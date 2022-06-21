@@ -1,41 +1,9 @@
-import logger from "redux-logger";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, createStore } from "@reduxjs/toolkit";
 import { rootReducer } from "./rootReducer";
 import { Context, createWrapper } from "next-redux-wrapper";
-import { Store } from "redux";
 
-// TODO: fix type issue
 const store = configureStore({
   reducer: rootReducer,
-  preloadedState: {
-    search: {
-      searchTerm: "",
-      filters: {
-        tags: {
-          globalTags: [],
-          filterTags: [],
-        },
-      },
-      sort: {
-        sortOrder: "ASCENDING",
-        sortType: "DATE",
-      },
-    },
-    posts: {
-      globalPosts: {
-        test: {
-          date: "14/06/2022",
-          description: "test1",
-          id: "test",
-          // tags: ["a", "b"],
-          title: "title",
-          content: "",
-          // category: "",
-        },
-      },
-      visiblePostIds: [],
-    },
-  },
   devTools: process.env.NODE_ENV !== "production",
 });
 

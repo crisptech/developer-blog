@@ -4,6 +4,7 @@ import { GetStaticPaths, GetStaticPropsContext, PreviewData } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { getAllPostIds, getPostData } from "../../lib/posts";
 import InferNextPropsType from "infer-next-props-type";
+import Link from "next/link";
 
 interface IParams extends ParsedUrlQuery {
   id: string;
@@ -28,6 +29,7 @@ export default function Post({
     <Box>
       <Typography>{postData.id}</Typography>
       <Typography>{postData.date}</Typography>
+      <Link href="/">Home</Link>
     </Box>
   );
 }

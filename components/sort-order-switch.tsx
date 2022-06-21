@@ -51,7 +51,12 @@ const SortOrderSwitch = () => {
     dispatch(updateSortOrder(newSortOrder));
   };
 
-  return <SortOrderSwitchButton onClick={handleClick} />;
+  return (
+    <SortOrderSwitchButton
+      onClick={handleClick}
+      checked={sortOrder === "ASCENDING" ? true : false}
+    />
+  );
 };
 
 export default SortOrderSwitch;
