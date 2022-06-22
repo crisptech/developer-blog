@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import { MouseEvent, useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Home.module.css";
-import { updateSearchTerm } from "../lib/slices/searchSlice";
+import { updateGlobalTags, updateSearchTerm } from "../lib/slices/searchSlice";
 import { selectSearchTerm } from "../lib/selectors/selectSearchTerm";
 import { Button, Paper, Typography } from "@mui/material";
 import { ColorModeContext } from "../context/colorModeContext";
@@ -30,6 +30,8 @@ import { SortOrder, SortType } from "../lib/types/sort";
 import { Post } from "../lib/types/posts";
 import SortTypeComboBox from "../components/sort-type-combo-box";
 import ColorModeSwitch from "../components/color-mode-switch";
+import { compose, concat, flatten, map, reduce, uniq } from "ramda";
+import { updateInitialLoad } from "../lib/slices/configSlice";
 
 const updateVisiblePostOrder = (
   dispatch: Dispatch<AnyAction>,
@@ -101,7 +103,6 @@ const updateVisiblePostOrder = (
 
 const Home: NextPage = () => {
   const dispatch = useDispatch();
-  const [count, setCount] = useState(0);
   const searchTerm = useSelector(selectSearchTerm);
   const sortOrder = useSelector(selectSortOrder);
   const posts = useSelector(selectVisiblePosts);
@@ -110,7 +111,7 @@ const Home: NextPage = () => {
   const colorTheme = useContext(ColorModeContext);
 
   useEffect(() => {
-    dispatch(updateSearchTerm("mwuaha"));
+    dispatch(updateInitialLoad(false));
   }, []);
 
   // useEffect(() => {
@@ -122,17 +123,9 @@ const Home: NextPage = () => {
     updateVisiblePostOrder(dispatch, posts, sortType, sortOrder);
   }, [sortType, sortOrder]);
 
-  function handleClick(
-    event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-  ) {
-    setCount(count + 1);
-    dispatch(updateSearchTerm(`testing ${count}`));
-  }
-
   return (
     <div className={styles.container}>
       {searchTerm}
-      <Button onClick={handleClick}>increment search term</Button>
       <Typography>Color theme component</Typography>
       <ColorModeSwitch
         toggleColorMode={colorTheme.toggleColorMode}
@@ -153,6 +146,17 @@ const Home: NextPage = () => {
   );
 };
 
+const getGlobalTagsFromPosts = (posts: Post[]) => {
+  let flattenedArr = compose(
+    flatten,
+    map((post: Post) => {
+      return post.tags;
+    })
+  )(posts);
+
+  return uniq(flattenedArr);
+};
+
 export const getStaticProps = wrapper.getStaticProps(
   (store) => async (context) => {
     const posts = await getAllPostsData();
@@ -160,6 +164,8 @@ export const getStaticProps = wrapper.getStaticProps(
     await store.dispatch(updateGlobalPosts(postsRecords));
     const sortedPostIds = getSortedPostIds(posts);
     await store.dispatch(udpateVisiblePostIds(sortedPostIds));
+    const globalTags = getGlobalTagsFromPosts(posts);
+    await store.dispatch(updateGlobalTags(globalTags));
 
     return {
       props: {},

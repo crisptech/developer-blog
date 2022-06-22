@@ -1,9 +1,10 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { indexBy, prop } from "ramda";
+import { compose, indexBy, map, prop, split, trim } from "ramda";
 import { Post } from "./types/posts";
 import Error from "next/error";
+import { splitAndTrim } from "./util/splitAndTrim";
 
 const filesPath = path.join("public", "posts");
 
@@ -55,8 +56,10 @@ export const getPostData = (id: string): Post => {
       date: valueIfExists(matterOfFile.data.date),
       title: valueIfExists(matterOfFile.data.title),
       description: valueIfExists(matterOfFile.data.description),
-      content: valueIfExists(matterOfFile.data.content),
+      content: valueIfExists(matterOfFile.content),
       duration: valueIfExists(matterOfFile.data.duration),
+      // tags are a string list with comma separators
+      tags: splitAndTrim(matterOfFile.data.tags),
     };
   } catch (error) {
     throw Error;

@@ -34,9 +34,10 @@ const searchSlice = createSlice({
       return {
         ...state,
         filters: {
+          ...state.filters,
           tags: {
             ...state.filters.tags,
-            globalTags: action.payload,
+            globalTags: [...action.payload],
           },
         },
       };
@@ -47,7 +48,7 @@ const searchSlice = createSlice({
         filters: {
           tags: {
             ...state.filters.tags,
-            filteredTags: action.payload,
+            filteredTags: [...action.payload],
           },
         },
       };
