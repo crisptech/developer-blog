@@ -6,10 +6,12 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-import { Typography } from "@mui/material";
+import { Chip, Typography } from "@mui/material";
 import { format } from "date-fns";
 import { Post } from "../lib/types/posts";
 import Link from "next/link";
+import { useSelector } from "react-redux";
+import { selectFilteredTags } from "../lib/selectors/selectFilteredTags";
 
 type BlogTimeLineProps = {
   posts: Post[];
@@ -46,6 +48,9 @@ const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
                   <Typography variant="h6">{post.title}</Typography>
                 </Link>
                 <Typography>{post.description}</Typography>
+                {post.tags.map((tag) => {
+                  return <Chip label={tag} />;
+                })}
               </TimelineContent>
             </TimelineItem>
           );

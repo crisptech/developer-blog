@@ -46,8 +46,6 @@ const TagSelectBox = () => {
     dispatch(
       updateFilteredTags(typeof value === "string" ? value.split(",") : value)
     );
-    console.log(value);
-    console.log(selectedTags);
   };
 
   return (
