@@ -46,9 +46,10 @@ const searchSlice = createSlice({
       return {
         ...state,
         filters: {
+          ...state.filters,
           tags: {
             ...state.filters.tags,
-            filteredTags: [...action.payload],
+            filterTags: [...action.payload],
           },
         },
       };

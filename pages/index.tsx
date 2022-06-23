@@ -32,6 +32,7 @@ import SortTypeComboBox from "../components/sort-type-combo-box";
 import ColorModeSwitch from "../components/color-mode-switch";
 import { compose, concat, flatten, map, reduce, uniq } from "ramda";
 import { updateInitialLoad } from "../lib/slices/configSlice";
+import TagSelectBox from "../components/tag-select-box";
 
 const updateVisiblePostOrder = (
   dispatch: Dispatch<AnyAction>,
@@ -132,6 +133,7 @@ const Home: NextPage = () => {
         colorMode={colorTheme.colorMode}
       />
       <SortOrderSwitch />
+      <TagSelectBox />
       <SortTypeComboBox />
       <Paper>
         <Typography variant="h1">Mui h1</Typography>
