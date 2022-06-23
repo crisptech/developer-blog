@@ -1,10 +1,11 @@
-import { Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { GetStaticPaths, GetStaticPropsContext, PreviewData } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { getAllPostIds, getPostData } from "../../lib/posts";
 import InferNextPropsType from "infer-next-props-type";
-import Link from "next/link";
+import md from "markdown-it";
+import Image from "next/image";
 
 interface IParams extends ParsedUrlQuery {
   id: string;
@@ -26,12 +27,21 @@ export default function Post({
   postData,
 }: InferNextPropsType<typeof getStaticProps>) {
   return (
-    <Box>
-      <Typography>{postData.id}</Typography>
-      <Typography>{postData.date}</Typography>
-      <Typography>{postData.content}</Typography>
-      <Link href="/">Home</Link>
-    </Box>
+    <Container
+      maxWidth="lg"
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <Typography variant="h1" align="center">
+        {postData.title}
+      </Typography>
+      {postData.image !== "" && (
+        <Image src={`/${postData.image}`} width="250px" height="100px" />
+      )}
+      <div
+        style={{ alignSelf: "flex-start" }}
+        dangerouslySetInnerHTML={{ __html: md().render(postData.content) }}
+      />
+    </Container>
   );
 }
 

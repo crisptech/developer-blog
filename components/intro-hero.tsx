@@ -23,7 +23,7 @@ const IntroHero = () => {
         <Typography variant="body2">
           exploring code, one byte at a time.{" "}
         </Typography>
-        <Typography variant="caption">
+        <Typography variant="caption" color="text.secondary">
           source code {"   "}
           <IconButton
             sx={{
@@ -31,6 +31,7 @@ const IntroHero = () => {
               height: "15px",
               marginLeft: "0.2rem",
               marginTop: "-0.2rem",
+              color: "text.secondary",
             }}
             href="https://github.com/crisptech"
           >
