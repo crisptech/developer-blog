@@ -33,8 +33,6 @@ export const rootReducer = (state: State | undefined, action: AnyAction) => {
       state.config.initialLoad !== true &&
       diff(state, serverState)
     ) {
-      console.log("client state", state);
-      console.log("server state", serverState);
       nextState = {
         ...serverState,
         ...clientState,

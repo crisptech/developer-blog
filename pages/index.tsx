@@ -35,6 +35,9 @@ import { selectFilteredTags } from "../lib/selectors/selectFilteredTags";
 import { selectGlobalPosts } from "../lib/selectors/selectGlobalPosts";
 import SearchTermBox from "../components/search-term-box";
 import Fuse from "fuse.js";
+import { Box, Container } from "@mui/system";
+import FilterMenu from "../components/filter-menu";
+import IntroHero from "../components/intro-hero";
 
 const updateVisiblePostOrder = (
   dispatch: Dispatch<AnyAction>,
@@ -75,13 +78,16 @@ const updateVisiblePostOrder = (
           durationB = regB === null ? 0 : Number(regB[0]);
         }
 
+        console.log("dur a", durationA);
+        console.log("dur b", durationB);
+
         return durationA < durationB
           ? sortOrder === "ASCENDING"
-            ? 1
-            : -1
+            ? -1
+            : 1
           : sortOrder === "ASCENDING"
-          ? -1
-          : 1;
+          ? 1
+          : -1;
       });
 
       const sortedDurPostsIds = sortDurVisiblePosts.map((post) => post.id);
@@ -91,11 +97,11 @@ const updateVisiblePostOrder = (
       const sortTitleVisiblePosts = [...visiblePosts].sort((postA, postB) => {
         return postA.title < postB.title
           ? sortOrder === "ASCENDING"
-            ? 1
-            : -1
+            ? -1
+            : 1
           : sortOrder === "ASCENDING"
-          ? -1
-          : 1;
+          ? 1
+          : -1;
       });
 
       const sortedTitlePostsIds = sortTitleVisiblePosts.map((post) => post.id);
@@ -176,23 +182,19 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.container}>
-      <Typography>Color theme component</Typography>
-      <ColorModeSwitch
-        toggleColorMode={colorTheme.toggleColorMode}
-        colorMode={colorTheme.colorMode}
-      />
-      <SearchTermBox />
-      <SortOrderSwitch />
-      <TagSelectBox />
-      <SortTypeComboBox />
-      <Paper>
-        <Typography variant="h1">Mui h1</Typography>
-      </Paper>
-      <Paper>
-        {postsIds.map((id) => (
-          <Link href={`/posts/${id}`}>{id}</Link>
-        ))}
-      </Paper>
+      <IntroHero />
+      <Box
+        width="100%"
+        sx={{ display: "flex", gap: "2rem", justifyContent: "center" }}
+      >
+        <SearchTermBox />
+        {/* <TagSelectBox />
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <SortTypeComboBox />
+          <SortOrderSwitch />
+        </Box> */}
+        <FilterMenu />
+      </Box>
       <BlogTimeline posts={posts} />
     </div>
   );

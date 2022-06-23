@@ -22,4 +22,5 @@ export type Post = {
   description: string;
   duration?: string;
   tags: string[];
+  image: string; // image path
 };

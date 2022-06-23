@@ -20,8 +20,8 @@ const SortTypeComboBox = () => {
   };
 
   return (
-    <FormControl fullWidth>
-      <InputLabel id="demo-simple-select-label">Age</InputLabel>
+    <FormControl size="small" margin="dense" sx={{ width: "8rem" }}>
+      <InputLabel id="demo-simple-select-label">sort by</InputLabel>
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"

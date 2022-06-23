@@ -19,9 +19,12 @@ const SearchTermBox = () => {
     <TextField
       onChange={handleChange}
       id="outlined-basic"
-      label="Filter Posts"
+      label="search posts"
       variant="outlined"
       value={searchTerm}
+      size="small"
+      margin="dense"
+      sx={{ borderRadius: "50%" }}
     />
   );
 };

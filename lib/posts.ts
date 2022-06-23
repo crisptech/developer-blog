@@ -60,6 +60,7 @@ export const getPostData = (id: string): Post => {
       duration: valueIfExists(matterOfFile.data.duration),
       // tags are a string list with comma separators
       tags: splitAndTrim(matterOfFile.data.tags),
+      image: valueIfExists(matterOfFile.data.image),
     };
   } catch (error) {
     throw Error;

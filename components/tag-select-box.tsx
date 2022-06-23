@@ -11,6 +11,7 @@ import { selectGlobalTags } from "../lib/selectors/selectGlobalTags";
 import { useDispatch, useSelector } from "react-redux";
 import { selectFilteredTags } from "../lib/selectors/selectFilteredTags";
 import { updateFilteredTags } from "../lib/slices/searchSlice";
+import { alpha } from "@mui/system";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -29,6 +30,9 @@ function getStyles(tag: string, selectedTags: readonly string[], theme: Theme) {
       selectedTags.indexOf(tag) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
+    backgroundColor:
+      selectedTags.indexOf(tag) !== -1 &&
+      alpha(theme.palette.primary.main, 0.16),
   };
 }
 
@@ -50,8 +54,8 @@ const TagSelectBox = () => {
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">Filter Tags</InputLabel>
+      <FormControl margin="dense" size="small" sx={{ width: 200 }}>
+        <InputLabel id="demo-multiple-chip-label">filter tags</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"

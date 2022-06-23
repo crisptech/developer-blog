@@ -12,10 +12,13 @@ import {
 } from "@mui/material";
 import { ColorModeContext } from "../context/colorModeContext";
 import { PaletteType } from "../lib/types/theme";
+import NavBar from "../components/nav-bar";
 
 const getDesignTokens = (mode: PaletteType) => ({
   typography: {
     fontFamily: ["Poppins, Montserrat"],
+    fontWeightRegular: 100,
+    fontWeightMedium: 300,
   },
   palette: {
     mode,
@@ -65,9 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <AppBar position="static" enableColorOnDark color="primary">
-          <Typography>mui app bar</Typography>
-        </AppBar>
+        <NavBar />
         <CssBaseline />
         <Component {...pageProps} />
       </ThemeProvider>
