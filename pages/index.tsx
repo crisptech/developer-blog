@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
-import { MouseEvent, useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Home.module.css";
-import { updateGlobalTags, updateSearchTerm } from "../lib/slices/searchSlice";
+import { updateGlobalTags } from "../lib/slices/searchSlice";
 import { selectSearchTerm } from "../lib/selectors/selectSearchTerm";
-import { Button, Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import { ColorModeContext } from "../context/colorModeContext";
 import {
   getAllPostsData,
@@ -20,19 +20,21 @@ import { selectVisiblePostIds } from "../lib/selectors/selectVisiblePostIds";
 import { selectVisiblePosts } from "../lib/selectors/selectVisiblePosts";
 import Link from "next/link";
 import BlogTimeline from "../components/blog-timeline";
-import StyledThemeSwitch from "../components/color-mode-switch";
 import SortOrderSwitch from "../components/sort-order-switch";
 import { selectSortOrder } from "../lib/selectors/selectSortOrder";
 import { selectSortType } from "../lib/selectors/selectSortType";
-import { updateSortType, updateSortOrder } from "../lib/slices/searchSlice";
 import { AnyAction, Dispatch } from "redux";
 import { SortOrder, SortType } from "../lib/types/sort";
 import { Post } from "../lib/types/posts";
 import SortTypeComboBox from "../components/sort-type-combo-box";
 import ColorModeSwitch from "../components/color-mode-switch";
-import { compose, concat, flatten, map, reduce, uniq } from "ramda";
+import { compose, flatten, intersection, map, uniq } from "ramda";
 import { updateInitialLoad } from "../lib/slices/configSlice";
 import TagSelectBox from "../components/tag-select-box";
+import { selectFilteredTags } from "../lib/selectors/selectFilteredTags";
+import { selectGlobalPosts } from "../lib/selectors/selectGlobalPosts";
+import SearchTermBox from "../components/search-term-box";
+import Fuse from "fuse.js";
 
 const updateVisiblePostOrder = (
   dispatch: Dispatch<AnyAction>,
@@ -102,36 +104,84 @@ const updateVisiblePostOrder = (
   }
 };
 
+const fuseSearch = (posts: Post[], keys: string[], searchTerm: string) => {
+  const fuse = new Fuse([...posts], {
+    keys: [...keys],
+  });
+
+  const fuseResults = fuse.search(searchTerm);
+
+  const updatedPosts: Post[] = fuseResults.map((fuseResult) => fuseResult.item);
+
+  return updatedPosts;
+};
+
+const filterTagsUpdateVisiblePosts = (
+  dispatch: Dispatch<AnyAction>,
+  globalPosts: Post[],
+  filteredTags: string[],
+  searchTerm: string
+): Post[] => {
+  let updatedPosts =
+    filteredTags.length === 0
+      ? globalPosts
+      : [...globalPosts].filter((post) => {
+          return intersection(post.tags, filteredTags).length !== 0;
+        });
+
+  updatedPosts =
+    searchTerm.length === 0
+      ? updatedPosts
+      : fuseSearch(
+          updatedPosts,
+          ["title", "description", "content"],
+          searchTerm
+        );
+
+  let updatedPostsIds = updatedPosts.map((post) => post.id);
+
+  dispatch(udpateVisiblePostIds(updatedPostsIds));
+
+  return updatedPosts;
+};
+
 const Home: NextPage = () => {
   const dispatch = useDispatch();
   const searchTerm = useSelector(selectSearchTerm);
   const sortOrder = useSelector(selectSortOrder);
   const posts = useSelector(selectVisiblePosts);
+  const globalPosts = useSelector(selectGlobalPosts);
   const postsIds = useSelector(selectVisiblePostIds);
   const sortType = useSelector(selectSortType);
+  const filteredTags = useSelector(selectFilteredTags);
   const colorTheme = useContext(ColorModeContext);
 
   useEffect(() => {
     dispatch(updateInitialLoad(false));
   }, []);
 
-  // useEffect(() => {
-  //   const reversePostIds = [...postsIds].reverse();
-  //   dispatch(udpateVisiblePostIds(reversePostIds));
-  // }, [sortOrder]);
-
   useEffect(() => {
     updateVisiblePostOrder(dispatch, posts, sortType, sortOrder);
   }, [sortType, sortOrder]);
 
+  useEffect(() => {
+    const updatedPosts = filterTagsUpdateVisiblePosts(
+      dispatch,
+      Object.values(globalPosts),
+      filteredTags,
+      searchTerm
+    );
+    updateVisiblePostOrder(dispatch, updatedPosts, sortType, sortOrder);
+  }, [filteredTags, searchTerm]);
+
   return (
     <div className={styles.container}>
-      {searchTerm}
       <Typography>Color theme component</Typography>
       <ColorModeSwitch
         toggleColorMode={colorTheme.toggleColorMode}
         colorMode={colorTheme.colorMode}
       />
+      <SearchTermBox />
       <SortOrderSwitch />
       <TagSelectBox />
       <SortTypeComboBox />

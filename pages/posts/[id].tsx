@@ -29,6 +29,7 @@ export default function Post({
     <Box>
       <Typography>{postData.id}</Typography>
       <Typography>{postData.date}</Typography>
+      <Typography>{postData.content}</Typography>
       <Link href="/">Home</Link>
     </Box>
   );
