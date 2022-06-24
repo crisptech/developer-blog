@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { wrapper } from "../app/store";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { blueGrey, grey } from "@mui/material/colors";
 import {
   createTheme,
@@ -9,11 +9,17 @@ import {
   AppBar,
   responsiveFontSizes,
   Typography,
+  Box,
+  IconButton,
 } from "@mui/material";
 import { ColorModeContext } from "../context/colorModeContext";
 import { PaletteType } from "../lib/types/theme";
 import NavBar from "../components/nav-bar";
 import FooterBar from "../components/footer-bar";
+import ResponsiveDrawer from "../components/side-drawer";
+import { Container } from "@mui/system";
+import SideNav from "../components/side-nav";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const getDesignTokens = (mode: PaletteType) => ({
   shape: {
@@ -55,6 +61,12 @@ const getDesignTokens = (mode: PaletteType) => ({
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [mode, setMode] = useState<PaletteType>("light");
+  const [showSideBar, setShowSideBar] = useState<boolean>(false);
+
+  // useEffect(() => {
+  //   setShowSideBar(true);
+  // }, []);
+
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
@@ -67,15 +79,52 @@ function MyApp({ Component, pageProps }: AppProps) {
     [mode]
   );
 
+  const handleBurgerMenu = (e) => {
+    setShowSideBar(!showSideBar);
+    console.log(showSideBar);
+  };
+
   let theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
   theme = responsiveFontSizes(theme);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <NavBar />
+        <IconButton
+          onClick={handleBurgerMenu}
+          sx={{
+            position: "fixed",
+            margin: "2rem",
+            width: "48px",
+            height: "48px",
+            top: 0,
+            left: 0,
+            display: {
+              md: "none",
+            },
+          }}
+        >
+          <MenuIcon />
+        </IconButton>
+        {/* <NavBar /> */}
         <CssBaseline />
-        <Component {...pageProps} />
+        {/* <ResponsiveDrawer> */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            width: "100%",
+            maxWidth: "100%",
+          }}
+        >
+          <SideNav
+            flexGrow={0}
+            showSideBar={showSideBar}
+            setShowSideBar={setShowSideBar}
+          />
+          <Component {...pageProps} />
+        </Box>
+        {/* </ResponsiveDrawer> */}
         <FooterBar />
       </ThemeProvider>
     </ColorModeContext.Provider>

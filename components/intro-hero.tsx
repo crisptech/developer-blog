@@ -1,4 +1,4 @@
-import { Avatar, Divider, IconButton, Typography } from "@mui/material";
+import { Avatar, IconButton, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React from "react";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -19,10 +19,10 @@ const IntroHero = () => {
         sx={{ width: "48px", height: "48px", margin: "0.4rem" }}
       />
       <Box sx={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-        <Typography variant="inherit" sx={{ fontWeight: "fontWeightMedium" }}>
+        <Typography variant="h6" sx={{ fontWeight: "fontWeightMedium" }}>
           Personal blog of Tom Crisp.
         </Typography>
-        <Typography variant="body2">
+        <Typography variant="body1">
           explore code with me, one byte at a time.{" "}
         </Typography>
         <Typography variant="caption" color="text.secondary">

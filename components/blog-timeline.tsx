@@ -23,6 +23,7 @@ import Link from "next/link";
 import { selectFilteredTags } from "../lib/selectors/selectFilteredTags";
 import { Box } from "@mui/system";
 import Image from "next/image";
+import { grey } from "@mui/material/colors";
 
 type BlogTimeLineProps = {
   posts: Post[];
@@ -45,16 +46,15 @@ const StyledTimelineContent = styled(TimelineContent)<ITimelineContentProps>(
 
 const StyledTimelineItem = styled(TimelineItem)(({ theme }) => ({
   /* The fast way */
-  boxShadow: `0 0px 0px ${alpha(theme.palette.primary.main, 0.1)}`,
-  transition:
-    "box-shadow 0.75s ease-in-out, background-color 0.75s ease-in-out",
+  // boxShadow: `0 0px 0px ${alpha(theme.palette.primary.main, 0.1)}`,
+  transition: "background-color 0.75s ease-in-out",
   borderRadius: "2rem",
   "&:hover": {
     // backgroundColor: "red",
-    boxShadow: `20px 0px 10px -4px ${alpha(
-      theme.palette.primary.main,
-      0.1
-    )}, -20px 0px 6px -4px ${alpha(theme.palette.primary.main, 0.1)}`,
+    // boxShadow: `20px 0px 10px -4px ${alpha(
+    //   theme.palette.primary.main,
+    //   0.1
+    // )}, -20px 0px 6px -4px ${alpha(theme.palette.primary.main, 0.1)}`,
     // backgroundColor: `linear-gradient(to right bottom, white, ${theme.palette.primary.main} `,
     backgroundColor: alpha(theme.palette.primary.main, 0.1),
   },
@@ -62,7 +62,7 @@ const StyledTimelineItem = styled(TimelineItem)(({ theme }) => ({
 
 const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
   return (
-    <>
+    <div>
       <Timeline position="alternate">
         {posts.map((post, index) => {
           const date = post.date;
@@ -86,6 +86,10 @@ const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
                       position: "relative",
                       width: "300px",
                       height: "150px",
+                      display: {
+                        xs: "none",
+                        lg: "flex",
+                      },
                     }}
                   >
                     <Image
@@ -116,15 +120,24 @@ const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
                   sx={{
                     display: "flex",
                     justifyContent: "center",
+                    gap: "0.3rem",
                     marginBottom: "1em",
                   }}
                 >
                   {post.tags.map((tag) => {
-                    return <Chip size="small" color="default" label={tag} />;
+                    return (
+                      <Chip
+                        sx={{ color: grey[400] }}
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                        label={tag}
+                      />
+                    );
                   })}
                 </Box>
                 <Link href={`/posts/${post.id}`}>
-                  <Button variant="outlined" size="small">
+                  <Button variant="contained" color="divider" size="small">
                     READ MORE
                   </Button>
                 </Link>
@@ -133,7 +146,7 @@ const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
           );
         })}
       </Timeline>
-    </>
+    </div>
   );
 };
 
