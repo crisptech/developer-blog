@@ -13,6 +13,7 @@ import {
 import { ColorModeContext } from "../context/colorModeContext";
 import { PaletteType } from "../lib/types/theme";
 import NavBar from "../components/nav-bar";
+import FooterBar from "../components/footer-bar";
 
 const getDesignTokens = (mode: PaletteType) => ({
   typography: {
@@ -71,6 +72,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <NavBar />
         <CssBaseline />
         <Component {...pageProps} />
+        <FooterBar />
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

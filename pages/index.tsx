@@ -188,11 +188,6 @@ const Home: NextPage = () => {
         sx={{ display: "flex", gap: "2rem", justifyContent: "center" }}
       >
         <SearchTermBox />
-        {/* <TagSelectBox />
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <SortTypeComboBox />
-          <SortOrderSwitch />
-        </Box> */}
         <FilterMenu />
       </Box>
       <BlogTimeline posts={posts} />

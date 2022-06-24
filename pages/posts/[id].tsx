@@ -28,7 +28,7 @@ export default function Post({
 }: InferNextPropsType<typeof getStaticProps>) {
   return (
     <Container
-      maxWidth="lg"
+      maxWidth="md"
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <Typography variant="h1" align="center">
