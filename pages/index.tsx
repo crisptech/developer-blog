@@ -80,9 +80,6 @@ const updateVisiblePostOrder = (
           durationB = regB === null ? 0 : Number(regB[0]);
         }
 
-        console.log("dur a", durationA);
-        console.log("dur b", durationB);
-
         return durationA < durationB
           ? sortOrder === "ASCENDING"
             ? -1

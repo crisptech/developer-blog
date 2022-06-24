@@ -81,7 +81,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const handleBurgerMenu = (e) => {
     setShowSideBar(!showSideBar);
-    console.log(showSideBar);
   };
 
   let theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
@@ -124,8 +123,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           />
           <Component {...pageProps} />
         </Box>
-        {/* </ResponsiveDrawer> */}
-        <FooterBar />
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

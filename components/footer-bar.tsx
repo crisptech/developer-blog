@@ -9,8 +9,8 @@ const FooterBar = () => {
         display: "flex",
         flexDirection: "row",
         width: "100%",
-        gap: "3rem",
-        justifyContent: "center",
+        gap: "2rem",
+        justifyContent: "flex-end",
         marginBottom: "1em",
       }}
     >
