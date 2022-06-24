@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Home.module.css";
 import { updateGlobalTags } from "../lib/slices/searchSlice";
 import { selectSearchTerm } from "../lib/selectors/selectSearchTerm";
-import { Paper, Typography } from "@mui/material";
+import { Divider, Paper, Typography } from "@mui/material";
 import { ColorModeContext } from "../context/colorModeContext";
 import {
   getAllPostsData,
@@ -185,9 +185,15 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <IntroHero />
+      <Divider />
       <Box
         width="100%"
-        sx={{ display: "flex", gap: "2rem", justifyContent: "center" }}
+        sx={{
+          display: "flex",
+          gap: "2rem",
+          justifyContent: "center",
+          marginTop: "1rem",
+        }}
       >
         <SearchTermBox />
         <FilterMenu />

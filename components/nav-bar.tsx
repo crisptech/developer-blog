@@ -1,5 +1,5 @@
-import { AppBar, Typography } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import { AppBar, Button, Typography } from "@mui/material";
+import { blueGrey, grey } from "@mui/material/colors";
 import { Box } from "@mui/system";
 import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
@@ -43,22 +43,37 @@ const NavBar = () => {
         flexDirection: "row",
         justifyContent: "space-between",
         paddingX: "12%",
-        backgroundColor: colorMode === "light" ? grey[300] : grey[700],
+        backgroundColor: colorMode === "light" ? grey[100] : blueGrey[900],
         marginBottom: "1rem",
       }}
     >
       <Box sx={{ display: "flex" }}>
-        <Typography variant="h6" marginRight="0.5rem">
+        <Typography
+          sx={{ fontWeight: "fontWeightBold" }}
+          variant="h6"
+          marginRight="0.5rem"
+        >
           CrispTech{" "}
         </Typography>
         <Typography variant="h6">👋</Typography>
       </Box>
-      <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          gap: "2rem",
+          margin: "0.2rem",
+        }}
+      >
         <Link href="/resume">
-          <Typography variant="overline">resume</Typography>
+          <Button color="primary" size="small">
+            <Typography variant="inherit">resume</Typography>
+          </Button>
         </Link>
         <Link href="/projects">
-          <Typography variant="overline">projects</Typography>
+          <Button color="primary" size="small">
+            <Typography variant="inherit">projects</Typography>
+          </Button>
         </Link>
       </Box>
       <ColorModeSwitch

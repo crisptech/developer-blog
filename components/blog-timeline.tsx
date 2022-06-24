@@ -9,7 +9,14 @@ import TimelineContent, {
 import TimelineDot from "@mui/lab/TimelineDot";
 import { alpha } from "@mui/system";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-import { Button, Chip, styled, Typography } from "@mui/material";
+import {
+  Button,
+  Chip,
+  Container,
+  Paper,
+  styled,
+  Typography,
+} from "@mui/material";
 import { format } from "date-fns";
 import { Post } from "../lib/types/posts";
 import Link from "next/link";
@@ -69,22 +76,30 @@ const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
                   flexDirection: "column",
                 }}
               >
-                <Typography variant="caption" marginBottom="3rem">
+                <Typography variant="caption" marginBottom="1rem">
                   {`${formattedDate}`}
                   {post.duration ? `,   ${post.duration}` : ""}
                 </Typography>
                 {post.image !== "" && (
-                  <Image
-                    src={`/${post.image}`}
-                    width="50"
-                    height="75"
-                    priority
-                  />
+                  <Paper
+                    sx={{
+                      position: "relative",
+                      width: "300px",
+                      height: "150px",
+                    }}
+                  >
+                    <Image
+                      style={{ borderRadius: "25px" }}
+                      src={`/${post.image}`}
+                      layout="fill"
+                      priority
+                    />
+                  </Paper>
                 )}
               </TimelineOppositeContent>
               {index < posts.length - 1 ? (
                 <TimelineSeparator>
-                  <TimelineDot />
+                  <TimelineDot variant="outlined" />
                   <TimelineConnector />
                 </TimelineSeparator>
               ) : (
@@ -105,7 +120,7 @@ const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
                   }}
                 >
                   {post.tags.map((tag) => {
-                    return <Chip label={tag} />;
+                    return <Chip size="small" color="default" label={tag} />;
                   })}
                 </Box>
                 <Link href={`/posts/${post.id}`}>

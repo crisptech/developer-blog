@@ -16,10 +16,14 @@ import NavBar from "../components/nav-bar";
 import FooterBar from "../components/footer-bar";
 
 const getDesignTokens = (mode: PaletteType) => ({
+  shape: {
+    borderRadius: 25,
+  },
   typography: {
-    fontFamily: ["Poppins, Montserrat"],
-    fontWeightRegular: 100,
-    fontWeightMedium: 300,
+    fontFamily: ["'Rubik', sans-serif"],
+    fontWeightRegular: 400,
+    fontWeightMedium: 600,
+    fontWeightBold: 800,
   },
   palette: {
     mode,
