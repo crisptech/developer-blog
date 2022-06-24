@@ -38,6 +38,8 @@ import Fuse from "fuse.js";
 import { Box, Container } from "@mui/system";
 import FilterMenu from "../components/filter-menu";
 import IntroHero from "../components/intro-hero";
+import { Project } from "../lib/types/projects";
+import { getGlobalTagsFromObj } from "../lib/util/getGlobalTagsFromObj";
 
 const updateVisiblePostOrder = (
   dispatch: Dispatch<AnyAction>,
@@ -195,17 +197,6 @@ const Home: NextPage = () => {
   );
 };
 
-const getGlobalTagsFromPosts = (posts: Post[]) => {
-  let flattenedArr = compose(
-    flatten,
-    map((post: Post) => {
-      return post.tags;
-    })
-  )(posts);
-
-  return uniq(flattenedArr);
-};
-
 export const getStaticProps = wrapper.getStaticProps(
   (store) => async (context) => {
     const posts = await getAllPostsData();
@@ -213,7 +204,7 @@ export const getStaticProps = wrapper.getStaticProps(
     await store.dispatch(updateGlobalPosts(postsRecords));
     const sortedPostIds = getSortedPostIds(posts);
     await store.dispatch(udpateVisiblePostIds(sortedPostIds));
-    const globalTags = getGlobalTagsFromPosts(posts);
+    const globalTags = getGlobalTagsFromObj(posts);
     await store.dispatch(updateGlobalTags(globalTags));
 
     return {

@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { compose, indexBy, map, prop, split, trim } from "ramda";
+import { indexBy, prop } from "ramda";
 import { Post } from "./types/posts";
 import Error from "next/error";
 import { splitAndTrim } from "./util/splitAndTrim";
