@@ -1,6 +1,7 @@
 import { AppBar, Typography } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { Box } from "@mui/system";
+import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import { ColorModeContext } from "../context/colorModeContext";
 import ColorModeSwitch from "./color-mode-switch";
@@ -51,6 +52,14 @@ const NavBar = () => {
           CrispTech{" "}
         </Typography>
         <Typography variant="h6">👋</Typography>
+      </Box>
+      <Box sx={{ display: "flex" }}>
+        <Link href="/resume">
+          <Typography variant="overline">resume</Typography>
+        </Link>
+        <Link href="/projects">
+          <Typography variant="overline">projects</Typography>
+        </Link>
       </Box>
       <ColorModeSwitch
         colorMode={colorMode}
