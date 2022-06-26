@@ -2,21 +2,25 @@ import { AnyAction, combineReducers } from "redux";
 import searchReducer from "../lib/slices/searchSlice";
 import postsReducer from "../lib/slices/postsSlice";
 import configReducer from "../lib/slices/configSlice";
+import projectsReducer from "../lib/slices/projectsSlice";
 import { HYDRATE } from "next-redux-wrapper";
 import { SearchState } from "../lib/types/search";
 import { PostState } from "../lib/types/posts";
 import { diff } from "jsondiffpatch";
 import { ConfigState } from "../lib/types/config";
+import { ProjectState } from "../lib/types/projects";
 
 export const combinedReducer = combineReducers({
   search: searchReducer,
   posts: postsReducer,
+  projects: projectsReducer,
   config: configReducer,
 });
 
 type State = {
   search: SearchState;
   posts: PostState;
+  projects: ProjectState;
   config: ConfigState;
 };
 

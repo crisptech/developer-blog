@@ -14,13 +14,8 @@ import {
 } from "@mui/material";
 import { ColorModeContext } from "../context/colorModeContext";
 import { PaletteType } from "../lib/types/theme";
-import NavBar from "../components/nav-bar";
-import FooterBar from "../components/footer-bar";
-import ResponsiveDrawer from "../components/side-drawer";
-import { Container } from "@mui/system";
 import SideNav from "../components/side-nav";
 import MenuIcon from "@mui/icons-material/Menu";
-import { ThemeOptions } from "@mui/material/styles/experimental_extendTheme";
 
 const getDesignTokens = (mode: PaletteType) => ({
   shape: {
@@ -69,10 +64,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [mode, setMode] = useState<PaletteType>("light");
   const [showSideBar, setShowSideBar] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   setShowSideBar(true);
-  // }, []);
-
   const colorMode = useMemo(
     () => ({
       toggleColorMode: () => {
@@ -111,9 +102,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         >
           <MenuIcon />
         </IconButton>
-        {/* <NavBar /> */}
         <CssBaseline />
-        {/* <ResponsiveDrawer> */}
         <Box
           sx={{
             display: "flex",

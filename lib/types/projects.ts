@@ -8,3 +8,8 @@ export type Project = {
   // image path
   image: string;
 };
+
+export type ProjectState = {
+  globalProjects: Record<string, Project>;
+  visibleProjectIds: string[];
+};
