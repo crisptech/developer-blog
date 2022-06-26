@@ -19,7 +19,7 @@ const IntroHero = () => {
         sx={{ width: "48px", height: "48px", margin: "0.4rem" }}
       />
       <Box sx={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-        <Typography variant="h6" sx={{ fontWeight: "fontWeightMedium" }}>
+        <Typography variant="h5" sx={{ fontWeight: "fontWeightMedium" }}>
           Personal blog of Tom Crisp.
         </Typography>
         <Typography variant="body1">

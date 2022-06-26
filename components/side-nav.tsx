@@ -1,4 +1,5 @@
 import {
+  Button,
   Divider,
   IconButton,
   Paper,
@@ -26,28 +27,16 @@ import { useSpring, animated } from "react-spring";
 import { blueGrey, grey } from "@mui/material/colors";
 import { useOutsideAlerter } from "./outside-alerter";
 import FooterBar from "./footer-bar";
-
-//TODO: still need to fix the side bar not drawing when manually interacting with it in mobile mode
-
-// const Sidebar = ({ show }) => {
-//   const { left } = useSpring({
-//     from: { left: "-100%" },
-//     left: show ? "0" : "-100%"
-//   });
-//   return (
-//     <animated.div style={{ left: left }} className="Sidebar">
-//       <Items />
-//     </animated.div>
-//   );
-// };
-
-// export default Sidebar;V
+import Link from "next/link";
+import { navOptions, NavOptions } from "../config/navOptions";
+import dynamic from "next/dynamic";
 
 type SideNavProps = {
   flexGrow: number;
   showSideBar: boolean;
   setShowSideBar: Dispatch<SetStateAction<boolean>>;
 };
+
 const SideNav: React.FC<SideNavProps> = ({
   flexGrow,
   showSideBar,
@@ -138,21 +127,33 @@ const SideNav: React.FC<SideNavProps> = ({
             marginRight: "3rem",
           }}
         >
-          <Box sx={{ display: "flex", gap: "0.3rem", alignItems: "center" }}>
-            <RssFeedIcon />
-            <Typography variant="h6">blog</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+              alignItems: "flex-end",
+            }}
+          >
+            {Object.keys(navOptions).map((navOption) => {
+              return (
+                <Link href={navOptions[navOption].slug}>
+                  <Button
+                    color="inherit"
+                    sx={{
+                      display: "flex",
+                      gap: "0.5rem",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    <Typography variant="h6">{navOption}</Typography>
+                    {navOptions[navOption].icon}
+                  </Button>
+                </Link>
+              );
+            })}
           </Box>
-          <Divider />
-          <Box sx={{ display: "flex", gap: "0.3rem", alignItems: "center" }}>
-            <CodeIcon />
-            <Typography variant="h6">projects</Typography>
-          </Box>
-          <Divider />
-          <Box sx={{ display: "flex", gap: "0.3rem", alignItems: "center" }}>
-            <ContactPageIcon />
-            <Typography variant="h6">resume</Typography>
-          </Box>
-          <Divider sx={{ marginBottom: "2rem" }} />
           <FooterBar />
         </Box>
       </animated.div>

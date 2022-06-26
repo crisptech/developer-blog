@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import { wrapper } from "../app/store";
 import { useEffect, useMemo, useState } from "react";
-import { blueGrey, grey } from "@mui/material/colors";
+import { blue, blueGrey, grey, lightBlue } from "@mui/material/colors";
 import {
   createTheme,
   CssBaseline,
@@ -20,6 +20,7 @@ import ResponsiveDrawer from "../components/side-drawer";
 import { Container } from "@mui/system";
 import SideNav from "../components/side-nav";
 import MenuIcon from "@mui/icons-material/Menu";
+import { ThemeOptions } from "@mui/material/styles/experimental_extendTheme";
 
 const getDesignTokens = (mode: PaletteType) => ({
   shape: {
@@ -29,6 +30,9 @@ const getDesignTokens = (mode: PaletteType) => ({
     fontFamily: ["'Rubik', sans-serif"],
     fontWeightRegular: 400,
     fontWeightMedium: 600,
+    button: {
+      textTransform: "none",
+    },
     fontWeightBold: 800,
   },
   palette: {
@@ -37,6 +41,7 @@ const getDesignTokens = (mode: PaletteType) => ({
       ? {
           // palette values for light mode
           primary: grey,
+          secondary: lightBlue,
           divider: grey[200],
           text: {
             primary: grey[900],
@@ -46,6 +51,7 @@ const getDesignTokens = (mode: PaletteType) => ({
       : {
           // palette values for dark mode
           primary: blueGrey,
+          secondary: blue,
           divider: blueGrey[700],
           background: {
             default: blueGrey[900],

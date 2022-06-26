@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
@@ -23,7 +23,8 @@ import Link from "next/link";
 import { selectFilteredTags } from "../lib/selectors/selectFilteredTags";
 import { Box } from "@mui/system";
 import Image from "next/image";
-import { grey } from "@mui/material/colors";
+import { blueGrey, grey } from "@mui/material/colors";
+import { ColorModeContext } from "../context/colorModeContext";
 
 type BlogTimeLineProps = {
   posts: Post[];
@@ -61,6 +62,7 @@ const StyledTimelineItem = styled(TimelineItem)(({ theme }) => ({
 }));
 
 const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
+  const { colorMode } = useContext(ColorModeContext);
   return (
     <div>
       <Timeline position="alternate">
@@ -131,13 +133,22 @@ const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
                         size="small"
                         variant="outlined"
                         color="primary"
-                        label={tag}
+                        label={<Typography variant="caption">{tag}</Typography>}
                       />
                     );
                   })}
                 </Box>
                 <Link href={`/posts/${post.id}`}>
-                  <Button variant="contained" color="divider" size="small">
+                  <Button
+                    variant="contained"
+                    color={colorMode === "light" ? "inherit" : "primary"}
+                    sx={{
+                      backgroundColor:
+                        colorMode === "light" ? grey[300] : blueGrey[500],
+                      color: "white",
+                    }}
+                    size="small"
+                  >
                     READ MORE
                   </Button>
                 </Link>
