@@ -2,7 +2,10 @@ import type { NextPage } from "next";
 import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Home.module.css";
-import { updateGlobalTags } from "../lib/slices/searchSlice";
+import {
+  updateGlobalPostTags,
+  updateGlobalProjectTags,
+} from "../lib/slices/searchSlice";
 import { selectSearchTerm } from "../lib/selectors/selectSearchTerm";
 import { Divider, Paper, Typography } from "@mui/material";
 import { ColorModeContext } from "../context/colorModeContext";
@@ -40,6 +43,15 @@ import FilterMenu from "../components/filter-menu";
 import IntroHero from "../components/intro-hero";
 import { Project } from "../lib/types/projects";
 import { getGlobalTagsFromObj } from "../lib/util/getGlobalTagsFromObj";
+import {
+  getAllProjectsData,
+  getSortedProjectIds,
+  projectsToRecords,
+} from "../lib/projects";
+import {
+  updateGlobalProjects,
+  updateVisibleProjectIds,
+} from "../lib/slices/projectsSlice";
 
 const updateVisiblePostOrder = (
   dispatch: Dispatch<AnyAction>,
@@ -207,8 +219,17 @@ export const getStaticProps = wrapper.getStaticProps(
     await store.dispatch(updateGlobalPosts(postsRecords));
     const sortedPostIds = getSortedPostIds(posts);
     await store.dispatch(udpateVisiblePostIds(sortedPostIds));
-    const globalTags = getGlobalTagsFromObj(posts);
-    await store.dispatch(updateGlobalTags(globalTags));
+    const globalPostTags = getGlobalTagsFromObj(posts);
+    await store.dispatch(updateGlobalPostTags(globalPostTags));
+
+    const projects = await getAllProjectsData();
+    const projectsRecords = projectsToRecords(projects);
+    await store.dispatch(updateGlobalProjects(projectsRecords));
+    const sortedProjectIds = getSortedProjectIds(projects);
+    await store.dispatch(updateVisibleProjectIds(sortedProjectIds));
+    const globalProjectTags = getGlobalTagsFromObj(projects);
+    console.log(globalProjectTags);
+    await store.dispatch(updateGlobalProjectTags(globalProjectTags));
 
     return {
       props: {},

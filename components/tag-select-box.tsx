@@ -10,7 +10,7 @@ import Chip from "@mui/material/Chip";
 import { selectGlobalTags } from "../lib/selectors/selectGlobalTags";
 import { useDispatch, useSelector } from "react-redux";
 import { selectFilteredTags } from "../lib/selectors/selectFilteredTags";
-import { updateFilteredTags } from "../lib/slices/searchSlice";
+import { updatePostsFilteredTags } from "../lib/slices/searchSlice";
 import { alpha } from "@mui/system";
 
 const ITEM_HEIGHT = 48;
@@ -48,7 +48,9 @@ const TagSelectBox = () => {
     } = event;
 
     dispatch(
-      updateFilteredTags(typeof value === "string" ? value.split(",") : value)
+      updatePostsFilteredTags(
+        typeof value === "string" ? value.split(",") : value
+      )
     );
   };
 

@@ -1,33 +1,48 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PostState, Post } from "../types/posts";
+import { Project, ProjectState } from "../types/projects";
 
-const initialState: PostState = {
-  globalPosts: {},
-  visiblePostIds: [],
+const initialState: ProjectState = {
+  globalProjects: {},
+  visibleProjectIds: [],
 };
 
 const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    updateGlobalPosts: (state, action: PayloadAction<Record<string, Post>>) => {
+    updateGlobalProjects: (
+      state,
+      action: PayloadAction<Record<string, Project>>
+    ): ProjectState => {
       return {
         ...state,
-        globalPosts: {
-          ...state.globalPosts,
+        globalProjects: {
+          ...state.globalProjects,
           ...action.payload,
         },
       };
     },
-    udpateVisiblePostIds: (state, action: PayloadAction<string[]>) => {
+    updateVisibleProjectIds: (
+      state,
+      action: PayloadAction<string[]>
+    ): ProjectState => {
       return {
         ...state,
-        visiblePostIds: action.payload,
+        visibleProjectIds: action.payload,
+      };
+    },
+    updateGlobalProjectTags: (
+      state,
+      action: PayloadAction<string[]>
+    ): ProjectState => {
+      return {
+        ...state,
       };
     },
   },
 });
 
-export const { updateGlobalPosts, udpateVisiblePostIds } = searchSlice.actions;
+export const { updateGlobalProjects, updateVisibleProjectIds } =
+  searchSlice.actions;
 
 export default searchSlice.reducer;

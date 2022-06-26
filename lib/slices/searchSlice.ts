@@ -9,7 +9,11 @@ import { SearchState } from "../types/search";
 const initialState: SearchState = {
   searchTerm: "",
   filters: {
-    tags: {
+    postTags: {
+      globalTags: [],
+      filterTags: [],
+    },
+    projectTags: {
       globalTags: [],
       filterTags: [],
     },
@@ -30,25 +34,49 @@ const searchSlice = createSlice({
         searchTerm: action.payload,
       };
     },
-    updateGlobalTags: (state, action: PayloadAction<string[]>) => {
+    updateGlobalPostTags: (state, action: PayloadAction<string[]>) => {
       return {
         ...state,
         filters: {
           ...state.filters,
-          tags: {
-            ...state.filters.tags,
+          postTags: {
+            ...state.filters.postTags,
             globalTags: [...action.payload],
           },
         },
       };
     },
-    updateFilteredTags: (state, action: PayloadAction<string[]>) => {
+    updateGlobalProjectTags: (state, action: PayloadAction<string[]>) => {
       return {
         ...state,
         filters: {
           ...state.filters,
-          tags: {
-            ...state.filters.tags,
+          projectTags: {
+            ...state.filters.projectTags,
+            globalTags: [...action.payload],
+          },
+        },
+      };
+    },
+    updatePostsFilteredTags: (state, action: PayloadAction<string[]>) => {
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          postTags: {
+            ...state.filters.postTags,
+            filterTags: [...action.payload],
+          },
+        },
+      };
+    },
+    updateProjectsFilteredTags: (state, action: PayloadAction<string[]>) => {
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          projectTags: {
+            ...state.filters.projectTags,
             filterTags: [...action.payload],
           },
         },
@@ -77,8 +105,10 @@ const searchSlice = createSlice({
 
 export const {
   updateSearchTerm,
-  updateGlobalTags,
-  updateFilteredTags,
+  updateGlobalPostTags,
+  updatePostsFilteredTags,
+  updateGlobalProjectTags,
+  updateProjectsFilteredTags,
   updateSortOrder,
   updateSortType,
 } = searchSlice.actions;
