@@ -34,18 +34,36 @@ export const rootReducer = (state: State | undefined, action: AnyAction) => {
     // enabling client data to be persisted during site wide navigation
     if (
       state &&
-      state.config.initialLoad !== true &&
+      state.config.initialLoad === false &&
       diff(state, serverState)
     ) {
+      console.log("server", serverState);
+
       nextState = {
         ...serverState,
         ...clientState,
         search: {
           ...serverState.search,
           ...state.search,
+          sort: {
+            ...state.search.sort,
+          },
+          filters: {
+            ...serverState.search.filters,
+            ...state.search.filters,
+          },
+        },
+        config: {
+          ...serverState.config,
+          initialLoad: state.config.initialLoad,
         },
       };
     }
+
+    console.log("client", clientState);
+    console.log("server", serverState);
+    console.log("next", nextState);
+    console.log(diff(serverState, clientState));
 
     return nextState;
   } else {

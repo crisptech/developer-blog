@@ -11,7 +11,6 @@ const configSlice = createSlice({
   reducers: {
     updateInitialLoad: (state, action: PayloadAction<boolean>) => {
       return {
-        ...state,
         initialLoad: action.payload,
       };
     },

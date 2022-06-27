@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../styles/Home.module.css";
 import {
@@ -7,8 +7,7 @@ import {
   updateGlobalProjectTags,
 } from "../lib/slices/searchSlice";
 import { selectSearchTerm } from "../lib/selectors/selectSearchTerm";
-import { Divider, Paper, Typography } from "@mui/material";
-import { ColorModeContext } from "../context/colorModeContext";
+import { Divider } from "@mui/material";
 import {
   getAllPostsData,
   getSortedPostIds,
@@ -19,39 +18,32 @@ import {
   udpateVisiblePostIds,
   updateGlobalPosts,
 } from "../lib/slices/postsSlice";
-import { selectVisiblePostIds } from "../lib/selectors/selectVisiblePostIds";
 import { selectVisiblePosts } from "../lib/selectors/selectVisiblePosts";
-import Link from "next/link";
 import BlogTimeline from "../components/blog-timeline";
-import SortOrderSwitch from "../components/sort-order-switch";
 import { selectSortOrder } from "../lib/selectors/selectSortOrder";
 import { selectSortType } from "../lib/selectors/selectSortType";
+import { selectFilteredTags } from "../lib/selectors/selectFilteredTags";
 import { AnyAction, Dispatch } from "redux";
 import { SortOrder, SortType } from "../lib/types/sort";
 import { Post } from "../lib/types/posts";
-import SortTypeComboBox from "../components/sort-type-combo-box";
-import ColorModeSwitch from "../components/color-mode-switch";
-import { compose, flatten, intersection, map, uniq } from "ramda";
+import { intersection, uniq } from "ramda";
 import { updateInitialLoad } from "../lib/slices/configSlice";
-import TagSelectBox from "../components/tag-select-box";
-import { selectFilteredTags } from "../lib/selectors/selectFilteredTags";
 import { selectGlobalPosts } from "../lib/selectors/selectGlobalPosts";
 import SearchTermBox from "../components/search-term-box";
 import Fuse from "fuse.js";
-import { Box, Container } from "@mui/system";
+import { Box } from "@mui/system";
 import FilterMenu from "../components/filter-menu";
 import IntroHero from "../components/intro-hero";
-import { Project } from "../lib/types/projects";
 import { getGlobalTagsFromObj } from "../lib/util/getGlobalTagsFromObj";
+import {
+  updateGlobalProjects,
+  updateVisibleProjectIds,
+} from "../lib/slices/projectsSlice";
 import {
   getAllProjectsData,
   getSortedProjectIds,
   projectsToRecords,
 } from "../lib/projects";
-import {
-  updateGlobalProjects,
-  updateVisibleProjectIds,
-} from "../lib/slices/projectsSlice";
 
 const updateVisiblePostOrder = (
   dispatch: Dispatch<AnyAction>,
@@ -168,10 +160,8 @@ const Home: NextPage = () => {
   const sortOrder = useSelector(selectSortOrder);
   const posts = useSelector(selectVisiblePosts);
   const globalPosts = useSelector(selectGlobalPosts);
-  const postsIds = useSelector(selectVisiblePostIds);
   const sortType = useSelector(selectSortType);
   const filteredTags = useSelector(selectFilteredTags);
-  const colorTheme = useContext(ColorModeContext);
 
   useEffect(() => {
     dispatch(updateInitialLoad(false));

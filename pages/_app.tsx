@@ -1,14 +1,12 @@
 import type { AppProps } from "next/app";
 import { wrapper } from "../app/store";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { blue, blueGrey, grey, lightBlue } from "@mui/material/colors";
 import {
   createTheme,
   CssBaseline,
   ThemeProvider,
-  AppBar,
   responsiveFontSizes,
-  Typography,
   Box,
   IconButton,
 } from "@mui/material";
@@ -90,7 +88,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           onClick={handleBurgerMenu}
           sx={{
             position: "fixed",
-            margin: "2rem",
+            margin: "1rem",
             width: "48px",
             height: "48px",
             top: 0,

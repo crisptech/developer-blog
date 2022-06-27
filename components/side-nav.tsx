@@ -64,10 +64,12 @@ const SideNav: React.FC<SideNavProps> = ({
   return (
     <Box
       sx={{
-        width: {
-          md: "300px",
+        flexBasis: {
+          md: "400px",
           sm: 0,
         },
+        flexGrow: 3,
+        backgroundColor: "red",
         flexGrow: flexGrow,
         zIndex: 10,
       }}
@@ -81,7 +83,6 @@ const SideNav: React.FC<SideNavProps> = ({
           margin: "0.5rem",
           padding: "1rem",
           top: "1.5%",
-          flexGrow: flexGrow,
           backgroundColor: colorMode === "light" ? grey[100] : blueGrey[700],
           position: "fixed",
         }}
@@ -139,6 +140,7 @@ const SideNav: React.FC<SideNavProps> = ({
               return (
                 <Link href={navOptions[navOption].slug}>
                   <Button
+                    onClick={() => setShowSideBar(false)}
                     color="inherit"
                     sx={{
                       display: "flex",
