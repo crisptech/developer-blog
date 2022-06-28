@@ -1,8 +1,3 @@
-export type PostState = {
-  globalPosts: Record<string, Post>;
-  visiblePostIds: string[];
-};
-
 export type Post = {
   id: string;
   date: string;
@@ -12,4 +7,9 @@ export type Post = {
   duration?: string;
   tags: string[];
   image: string; // image path
+};
+
+export type PostState = {
+  globalPosts: Record<string, Post>;
+  visiblePostIds: string[];
 };

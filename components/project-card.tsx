@@ -61,6 +61,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ projectData }) => {
                 {projectData.tags.map((tag) => {
                   return (
                     <Chip
+                      key={tag}
                       label={<Typography variant="caption">{tag}</Typography>}
                       size="small"
                     />

@@ -3,21 +3,16 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import TagSelectBox from "./tag-select-box";
 import SortTypeComboBox from "./sort-type-combo-box";
 import SortOrderSwitch from "./sort-order-switch";
 import { useSelector } from "react-redux";
 import { selectSortOrder } from "../lib/selectors/selectSortOrder";
-import { Container } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 
 export default function FilterMenu() {

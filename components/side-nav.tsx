@@ -1,12 +1,9 @@
 import {
   Button,
-  Divider,
   IconButton,
-  Paper,
   Theme,
   Typography,
   useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, {
@@ -20,16 +17,12 @@ import React, {
 import { ColorModeContext } from "../context/colorModeContext";
 import ColorModeSwitch from "./color-mode-switch";
 import CloseIcon from "@mui/icons-material/Close";
-import RssFeedIcon from "@mui/icons-material/RssFeed";
-import CodeIcon from "@mui/icons-material/Code";
-import ContactPageIcon from "@mui/icons-material/ContactPage";
 import { useSpring, animated } from "react-spring";
 import { blueGrey, grey } from "@mui/material/colors";
 import { useOutsideAlerter } from "./outside-alerter";
 import FooterBar from "./footer-bar";
 import Link from "next/link";
-import { navOptions, NavOptions } from "../config/navOptions";
-import dynamic from "next/dynamic";
+import { navOptions } from "../config/navOptions";
 
 type SideNavProps = {
   flexGrow: number;
@@ -135,7 +128,7 @@ const SideNav: React.FC<SideNavProps> = ({
           >
             {Object.keys(navOptions).map((navOption) => {
               return (
-                <Link href={navOptions[navOption].slug}>
+                <Link key={navOption} href={navOptions[navOption].slug}>
                   <Button
                     onClick={() => setShowSideBar(false)}
                     color="inherit"

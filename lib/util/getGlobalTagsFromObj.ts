@@ -3,7 +3,7 @@ import { Post } from "../types/posts";
 import { Project } from "../types/projects";
 
 export const getGlobalTagsFromObj = (posts: Post[] | Project[]) => {
-  let flattenedArr = compose(
+  const flattenedArr = compose(
     flatten,
     map((obj: Post | Project) => {
       return obj.tags;

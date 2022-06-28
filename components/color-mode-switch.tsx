@@ -1,3 +1,4 @@
+import React from "react";
 import { Switch } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { PaletteType } from "../lib/types/theme";
@@ -64,7 +65,7 @@ const ColorModeSwitch: React.FC<ColorModeSwitchProps> = ({
   return (
     <StyledThemeSwitch
       onClick={toggleColorMode}
-      checked={colorMode === "light" ? false : true}
+      checked={colorMode !== "light"}
     />
   );
 };

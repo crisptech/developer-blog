@@ -1,5 +1,4 @@
-import { SvgIconTypeMap } from "@mui/material";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
+import React from "react";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import socialData from "../config/socials.json";
@@ -8,7 +7,7 @@ import { LinkedIn } from "@mui/icons-material";
 type Socials = {
   [name: string]: {
     url: string;
-    icon: JSX.Element;
+    icon: React.ReactElement;
   };
 };
 

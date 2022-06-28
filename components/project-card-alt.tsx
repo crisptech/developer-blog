@@ -7,8 +7,6 @@ import { Project } from "../lib/types/projects";
 import Image from "next/image";
 import Link from "next/link";
 import { animated, useSpring } from "react-spring";
-import { useSelector } from "react-redux";
-import { selectFilteredProjectTags } from "../lib/selectors/selectFilteredProjectTags";
 
 type ProjectCardType = {
   projectData: Project;
@@ -16,7 +14,6 @@ type ProjectCardType = {
 
 const ProjectCardAlt: React.FC<ProjectCardType> = ({ projectData }) => {
   const [state, toggle] = React.useState(false);
-  const selectedTags = useSelector(selectFilteredProjectTags);
 
   const { x } = useSpring({
     from: { x: 0 },
@@ -67,7 +64,7 @@ const ProjectCardAlt: React.FC<ProjectCardType> = ({ projectData }) => {
 
           <CardActions sx={{ display: "flex", justifyContent: "center" }}>
             {projectData.tags.map((tag) => {
-              return <Chip label={tag} size="small" />;
+              return <Chip key={tag} label={tag} size="small" />;
             })}
           </CardActions>
         </Card>

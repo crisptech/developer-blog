@@ -20,6 +20,7 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "react/jsx-filename-extension": [1, { extensions: [".ts", ".tsx"] }],
-    "react/react-in-jsx-scope": "disable",
+    "react/react-in-jsx-scope": 0,
+    "no-unused-vars": 1,
   },
 };

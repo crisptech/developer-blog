@@ -31,8 +31,9 @@ function getStyles(tag: string, selectedTags: readonly string[], theme: Theme) {
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
     backgroundColor:
-      selectedTags.indexOf(tag) !== -1 &&
-      alpha(theme.palette.primary.main, 0.16),
+      selectedTags.indexOf(tag) !== -1
+        ? alpha(theme.palette.primary.main, 0.16)
+        : "inherit",
   };
 }
 
@@ -80,7 +81,9 @@ const TagSelectBox = () => {
             <MenuItem
               key={tag}
               value={tag}
-              style={getStyles(tag, selectedTags, theme)}
+              style={{
+                ...getStyles(tag, selectedTags, theme),
+              }}
             >
               {tag}
             </MenuItem>

@@ -54,7 +54,7 @@ const SortOrderSwitch = () => {
   return (
     <SortOrderSwitchButton
       onClick={handleClick}
-      checked={sortOrder === "ASCENDING" ? true : false}
+      checked={sortOrder === "ASCENDING"}
     />
   );
 };

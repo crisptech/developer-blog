@@ -7,25 +7,16 @@ import TimelineContent, {
   TimelineContentProps,
 } from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
-import { alpha } from "@mui/system";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-import {
-  Button,
-  Chip,
-  Container,
-  Paper,
-  styled,
-  Typography,
-} from "@mui/material";
+import { Button, Chip, Paper, styled, Typography } from "@mui/material";
 import { format } from "date-fns";
 import { Post } from "../lib/types/posts";
 import Link from "next/link";
-import { selectFilteredTags } from "../lib/selectors/selectFilteredTags";
-import { Box } from "@mui/system";
+import { Box, alpha } from "@mui/system";
 import Image from "next/image";
 import { blueGrey, grey } from "@mui/material/colors";
 import { ColorModeContext } from "../context/colorModeContext";
-import { config, useTransition, animated, useSpring } from "react-spring";
+import { config, useTransition, animated } from "react-spring";
 
 type BlogTimeLineProps = {
   posts: Post[];
@@ -79,7 +70,7 @@ const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
   };
 
   const getRandomInRange = (min = 0, max = 100): number => {
-    let diff = max - min;
+    const diff = max - min;
 
     let rand = Math.random();
 
@@ -170,6 +161,7 @@ const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
                   {post.tags.map((tag) => {
                     return (
                       <Chip
+                        key={tag}
                         sx={{ color: grey[400] }}
                         size="small"
                         variant="outlined"

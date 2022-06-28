@@ -1,5 +1,4 @@
 import { Container, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import { GetStaticPaths, GetStaticPropsContext, PreviewData } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { getAllPostIds, getPostData } from "../../lib/posts";

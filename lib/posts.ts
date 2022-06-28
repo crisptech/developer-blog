@@ -68,5 +68,5 @@ export const getPostData = (id: string): Post => {
 };
 
 const valueIfExists = (value: string | null) => {
-  return value ? value : "";
+  return value || "";
 };

@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import { wrapper } from "../app/store";
-import { useMemo, useState } from "react";
+import { MouseEventHandler, useMemo, useState } from "react";
 import { blue, blueGrey, grey, lightBlue } from "@mui/material/colors";
 import {
   createTheme,
@@ -9,18 +9,19 @@ import {
   responsiveFontSizes,
   Box,
   IconButton,
+  ThemeOptions,
 } from "@mui/material";
 import { ColorModeContext } from "../context/colorModeContext";
 import { PaletteType } from "../lib/types/theme";
 import SideNav from "../components/side-nav";
 import MenuIcon from "@mui/icons-material/Menu";
 
-const getDesignTokens = (mode: PaletteType) => ({
+const getDesignTokens = (mode: PaletteType): ThemeOptions => ({
   shape: {
     borderRadius: 25,
   },
   typography: {
-    fontFamily: ["'Rubik', sans-serif"],
+    fontFamily: "'Rubik', sans-serif",
     fontWeightRegular: 400,
     fontWeightMedium: 600,
     button: {
@@ -74,7 +75,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     [mode]
   );
 
-  const handleBurgerMenu = (e) => {
+  const handleBurgerMenu: MouseEventHandler<HTMLButtonElement> = (e) => {
     setShowSideBar(!showSideBar);
   };
 

@@ -31,7 +31,10 @@ const SortTypeComboBox = () => {
       >
         {Object.keys(sortTypesToNum).map((sortTypeString) => {
           return (
-            <MenuItem value={sortTypesToNum[sortTypeString as SortType]}>
+            <MenuItem
+              key={sortTypeString}
+              value={sortTypesToNum[sortTypeString as SortType]}
+            >
               {sortTypeString.toLowerCase()}
             </MenuItem>
           );

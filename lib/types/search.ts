@@ -1,4 +1,4 @@
-import { SortOrder as SortOrder, SortType } from "./sort";
+import { SortOrder, SortType } from "./sort";
 
 export type SearchState = {
   searchTerm: string;

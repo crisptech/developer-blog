@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import type { NextPage } from "next";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +27,7 @@ import { selectFilteredTags } from "../lib/selectors/selectFilteredTags";
 import { AnyAction, Dispatch } from "redux";
 import { SortOrder, SortType } from "../lib/types/sort";
 import { Post } from "../lib/types/posts";
-import { intersection, uniq } from "ramda";
+import { intersection } from "ramda";
 import { updateInitialLoad } from "../lib/slices/configSlice";
 import { selectGlobalPosts } from "../lib/selectors/selectGlobalPosts";
 import SearchTermBox from "../components/search-term-box";
@@ -147,7 +148,7 @@ const filterTagsUpdateVisiblePosts = (
           searchTerm
         );
 
-  let updatedPostsIds = updatedPosts.map((post) => post.id);
+  const updatedPostsIds = updatedPosts.map((post) => post.id);
 
   dispatch(udpateVisiblePostIds(updatedPostsIds));
 

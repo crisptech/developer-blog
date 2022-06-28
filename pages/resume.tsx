@@ -1,6 +1,5 @@
 import { Divider, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
-import Image from "next/image";
 import React from "react";
 import GitHubCalendar from "react-github-calendar";
 import ResumeHero from "../components/resume-hero";

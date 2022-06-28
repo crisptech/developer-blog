@@ -1,7 +1,7 @@
 import { Chip, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { NextPage } from "next";
-import { intersection, project } from "ramda";
+import { intersection } from "ramda";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -45,8 +45,12 @@ import { Project } from "../lib/types/projects";
 import { getGlobalTagsFromObj } from "../lib/util/getGlobalTagsFromObj";
 import styles from "../styles/Home.module.css";
 
+type Sizes = "sm" | "md" | "lg";
+
 type ProjectCardSizeType = {
+  // eslint-disable-next-line no-unused-vars
   [cat in Sizes]: {
+    // eslint-disable-next-line no-unused-vars
     [size in Sizes]: number;
   };
 };
@@ -75,8 +79,6 @@ type ProjectWithSize = Project & {
   trans?: InterpolatorArgs<number, undefined>;
 };
 
-type Sizes = "sm" | "md" | "lg";
-
 const getRandomSize = (index: number): Sizes => {
   switch (index) {
     case 1:
@@ -103,7 +105,7 @@ const getSizeCategory = (sizeCategory?: Sizes | undefined): Sizes => {
 
 const getProjectCardsWithSizes = (projects: Project[]): ProjectWithSize[] => {
   let projectsWithSizes: ProjectWithSize[] = [];
-  let prevCategory: Sizes | undefined = undefined;
+  let prevCategory: Sizes | undefined;
 
   for (let i = 0; i < projects.length; i++) {
     projectsWithSizes = [
@@ -186,7 +188,7 @@ const Projects: NextPage = () => {
   };
 
   const getRandomInRange = (min = 0, max = 100): number => {
-    let diff = max - min;
+    const diff = max - min;
 
     let rand = Math.random();
 
@@ -205,7 +207,7 @@ const Projects: NextPage = () => {
         <div style={{ display: "flex", gap: "2rem" }}>
           {projectTags.map((tag, index) => {
             return (
-              <Box sx={{ display: "inline-flex" }}>
+              <Box key={tag} sx={{ display: "inline-flex" }}>
                 <Chip
                   color={selectedTags.includes(tag) ? "primary" : "default"}
                   onClick={() => handleTagSelect(tag)}
@@ -254,31 +256,6 @@ const Projects: NextPage = () => {
       </Grid>
     </div>
   );
-};
-
-const selectRandomSize = () => {
-  const rand = Math.ceil(Math.random() * 4);
-  const smallOrLarge = Math.ceil(Math.random() * 5);
-
-  if (smallOrLarge <= 3) {
-    switch (rand) {
-      case 1:
-        return 6;
-      case 2:
-        return 5;
-      case 3:
-        return 4;
-    }
-  } else {
-    switch (rand) {
-      case 3:
-        return 7;
-      case 4:
-        return 10;
-    }
-  }
-
-  return 4;
 };
 
 export const getStaticProps = wrapper.getStaticProps(

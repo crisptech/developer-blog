@@ -16,7 +16,11 @@ const FooterBar = () => {
     >
       {Object.keys(socials).map((social) => {
         const { url, icon } = socials[social];
-        return <IconButton href={url}>{icon}</IconButton>;
+        return (
+          <IconButton key={social} href={url}>
+            {icon}
+          </IconButton>
+        );
       })}
     </Box>
   );

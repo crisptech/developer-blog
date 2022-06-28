@@ -1,11 +1,11 @@
+import { Project } from "./types/projects";
+import { splitAndTrim } from "./util/splitAndTrim";
 import fs from "fs";
 import matter from "gray-matter";
 import Error from "next/error";
 import path from "path";
 import { indexBy, prop } from "ramda";
 const filesPath = path.join("public", "projects");
-import { Project } from "./types/projects";
-import { splitAndTrim } from "./util/splitAndTrim";
 
 export const getAllProjectIds = async () => {
   const fileNames = await fs.promises.readdir(filesPath);
@@ -65,5 +65,5 @@ export const getProjectData = (id: string): Project => {
 };
 
 const valueIfExists = (value: string | null) => {
-  return value ? value : "";
+  return value || "";
 };
