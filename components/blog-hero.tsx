@@ -1,17 +1,36 @@
 import { Avatar, IconButton, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
-import React from "react";
+import React, { useEffect } from "react";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { animated, useSpring } from "react-spring";
 
 const IntroHero = () => {
+  const AnimatedContainer = animated(Container);
+  const [state, toggle] = React.useState(false);
+
+  useEffect(() => {
+    toggle(true);
+  }, []);
+
+  const animatedStyles = useSpring({
+    from: { opacity: 0, marginBottom: 800 },
+    to: { opacity: 1, marginBottom: 0 },
+    delay: 100,
+    config: { duration: 300 },
+    x: state ? 1 : 0,
+  });
+
   return (
-    <Container
+    <AnimatedContainer
       sx={{
         display: "flex",
         gap: "0.3rem",
         marginBottom: "1rem",
         justifyContent: "center",
         alignItems: "center",
+      }}
+      style={{
+        ...animatedStyles,
       }}
     >
       <Avatar
@@ -41,7 +60,7 @@ const IntroHero = () => {
           </IconButton>
         </Typography>
       </Box>
-    </Container>
+    </AnimatedContainer>
   );
 };
 

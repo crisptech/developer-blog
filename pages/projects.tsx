@@ -12,6 +12,7 @@ import {
 import { wrapper } from "../app/store";
 import ProjectCard from "../components/project-card";
 import ProjectCardAlt from "../components/project-card-alt";
+import ProjectsHero from "../components/projects-hero";
 import {
   getAllPostsData,
   getSortedPostIds,
@@ -152,7 +153,6 @@ const Projects: NextPage = () => {
   });
 
   const AnimatedGrid = animated(Grid);
-  const AnimatedProjectCard = animated(ProjectCardAlt);
 
   const getRandDisplacement = (): number => {
     return Math.random() * 1500 + 1000;
@@ -172,6 +172,7 @@ const Projects: NextPage = () => {
 
   return (
     <div className={styles.container}>
+      <ProjectsHero />
       <Grid
         container
         columnSpacing="4rem"
@@ -188,7 +189,7 @@ const Projects: NextPage = () => {
             justifyContent="center"
             alignItems="center"
             style={{
-              opacity: opacity.to({ output: [0.4, 1.2] }),
+              opacity: opacity.to({ range: [0.8, 1], output: [0.0, 1] }),
               transform: opacity
                 .to({
                   range: [getRandomInRange(0.5, 0.6), 1],

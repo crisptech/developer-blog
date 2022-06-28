@@ -25,6 +25,7 @@ import { Box } from "@mui/system";
 import Image from "next/image";
 import { blueGrey, grey } from "@mui/material/colors";
 import { ColorModeContext } from "../context/colorModeContext";
+import { config, useTransition, animated, useSpring } from "react-spring";
 
 type BlogTimeLineProps = {
   posts: Post[];
@@ -63,10 +64,140 @@ const StyledTimelineItem = styled(TimelineItem)(({ theme }) => ({
 
 const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
   const { colorMode } = useContext(ColorModeContext);
+
+  const transitions = useTransition(posts, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    delay: 200,
+    config: config.molasses,
+  });
+
+  const AnimatedStyledTimelineItem = animated(StyledTimelineItem);
+
+  const getRandDisplacement = (): number => {
+    return Math.random() * 1500 + 1000;
+  };
+
+  const getRandomInRange = (min = 0, max = 100): number => {
+    let diff = max - min;
+
+    let rand = Math.random();
+
+    rand = Math.floor(rand * diff);
+
+    rand = rand + min;
+
+    return rand;
+  };
+
   return (
     <div>
       <Timeline position="alternate">
-        {posts.map((post, index) => {
+        {transitions(({ opacity }, post, transition, index) => {
+          const date = post.date;
+          const formattedDate = format(new Date(date), "do MMM yyyy");
+
+          return (
+            <AnimatedStyledTimelineItem
+              style={{
+                opacity: opacity.to({ range: [0.8, 1], output: [0.0, 1] }),
+                transform: opacity
+                  .to({
+                    range: [getRandomInRange(0.5, 0.6), 1],
+                    output: [getRandDisplacement(), 0],
+                  })
+                  .to(
+                    index % 2 === 0
+                      ? (x) => `translate3d(-${x}px,0,0)`
+                      : (x) => `translate3d(${x}px,0,0)`
+                  ),
+              }}
+            >
+              <TimelineOppositeContent
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <Typography variant="caption" marginBottom="1rem">
+                  {`${formattedDate}`}
+                  {post.duration ? `,   ${post.duration}` : ""}
+                </Typography>
+                {post.image !== "" && (
+                  <Paper
+                    sx={{
+                      position: "relative",
+                      width: "300px",
+                      height: "150px",
+                      display: {
+                        xs: "none",
+                        lg: "flex",
+                      },
+                    }}
+                  >
+                    <Image
+                      style={{ borderRadius: "25px" }}
+                      src={`/${post.image}`}
+                      layout="fill"
+                      priority
+                    />
+                  </Paper>
+                )}
+              </TimelineOppositeContent>
+              {index < posts.length - 1 ? (
+                <TimelineSeparator>
+                  <TimelineDot variant="outlined" />
+                  <TimelineConnector />
+                </TimelineSeparator>
+              ) : (
+                <TimelineSeparator>
+                  <TimelineDot />
+                </TimelineSeparator>
+              )}
+              <StyledTimelineContent index={index}>
+                <Typography variant="h6">{post.title}</Typography>
+                <Typography maxWidth="15rem" variant="body2">
+                  {post.description}
+                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: "0.3rem",
+                    marginBottom: "1em",
+                  }}
+                >
+                  {post.tags.map((tag) => {
+                    return (
+                      <Chip
+                        sx={{ color: grey[400] }}
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                        label={<Typography variant="caption">{tag}</Typography>}
+                      />
+                    );
+                  })}
+                </Box>
+                <Link href={`/posts/${post.id}`}>
+                  <Button
+                    variant="contained"
+                    color={colorMode === "light" ? "inherit" : "primary"}
+                    sx={{
+                      backgroundColor:
+                        colorMode === "light" ? grey[300] : blueGrey[500],
+                      color: "white",
+                    }}
+                    size="small"
+                  >
+                    READ MORE
+                  </Button>
+                </Link>
+              </StyledTimelineContent>
+            </AnimatedStyledTimelineItem>
+          );
+        })}
+        {/* {posts.map((post, index) => {
           const date = post.date;
           const formattedDate = format(new Date(date), "do MMM yyyy");
 
@@ -155,7 +286,7 @@ const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
               </StyledTimelineContent>
             </StyledTimelineItem>
           );
-        })}
+        })} */}
       </Timeline>
     </div>
   );

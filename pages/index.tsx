@@ -33,7 +33,7 @@ import SearchTermBox from "../components/search-term-box";
 import Fuse from "fuse.js";
 import { Box } from "@mui/system";
 import FilterMenu from "../components/filter-menu";
-import IntroHero from "../components/intro-hero";
+import IntroHero from "../components/blog-hero";
 import { getGlobalTagsFromObj } from "../lib/util/getGlobalTagsFromObj";
 import {
   updateGlobalProjects,
