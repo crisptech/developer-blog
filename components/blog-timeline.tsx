@@ -68,7 +68,7 @@ const BlogTimeline: React.FC<BlogTimeLineProps> = ({ posts }) => {
   const transitions = useTransition(posts, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
-    delay: 200,
+    delay: 0,
     config: config.molasses,
   });
 

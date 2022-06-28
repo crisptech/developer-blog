@@ -1,6 +1,7 @@
-import { Grid, Typography } from "@mui/material";
+import { Chip, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { NextPage } from "next";
+import { intersection, project } from "ramda";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -10,7 +11,6 @@ import {
   useTransition,
 } from "react-spring";
 import { wrapper } from "../app/store";
-import ProjectCard from "../components/project-card";
 import ProjectCardAlt from "../components/project-card-alt";
 import ProjectsHero from "../components/projects-hero";
 import {
@@ -23,6 +23,8 @@ import {
   getSortedProjectIds,
   projectsToRecords,
 } from "../lib/projects";
+import { selectFilteredProjectTags } from "../lib/selectors/selectFilteredProjectTags";
+import { selectGlobalProjects } from "../lib/selectors/selectGlobalProjects";
 import { selectProjectGlobalTags } from "../lib/selectors/selectProjectGlobalTags";
 import { selectVisibleProjects } from "../lib/selectors/selectVisibleProjects";
 import { updateInitialLoad } from "../lib/slices/configSlice";
@@ -37,6 +39,7 @@ import {
 import {
   updateGlobalPostTags,
   updateGlobalProjectTags,
+  updateProjectsFilteredTags,
 } from "../lib/slices/searchSlice";
 import { Project } from "../lib/types/projects";
 import { getGlobalTagsFromObj } from "../lib/util/getGlobalTagsFromObj";
@@ -132,6 +135,9 @@ const getProjectCardsWithSizes = (projects: Project[]): ProjectWithSize[] => {
 
 const Projects: NextPage = () => {
   const projects = useSelector(selectVisibleProjects);
+  const projectTags = useSelector(selectProjectGlobalTags);
+  const globalProjects = useSelector(selectGlobalProjects);
+  const selectedTags = useSelector(selectFilteredProjectTags);
   const [projectsWithSizes, setProjectsWithSizes] = useState<ProjectWithSize[]>(
     []
   );
@@ -145,12 +151,33 @@ const Projects: NextPage = () => {
     setProjectsWithSizes(getProjectCardsWithSizes(projects));
   }, [projects]);
 
+  useEffect(() => {
+    const globalProjectsArray = [...Object.values(globalProjects)];
+    const filteredProjects =
+      selectedTags.length > 0
+        ? [...globalProjectsArray].filter(
+            (project) => intersection(selectedTags, project.tags).length > 0
+          )
+        : [...globalProjectsArray];
+
+    const filteredProjectsIds = filteredProjects.map((project) => project.id);
+
+    dispatch(updateVisibleProjectIds(filteredProjectsIds));
+  }, [selectedTags]);
+
   const transitions = useTransition(projectsWithSizes, {
     from: { opacity: 0 },
     enter: { opacity: 1 },
-    delay: 200,
     config: config.molasses,
   });
+
+  const handleTagSelect = (selectedTag: string) => {
+    const newSelectedTags = selectedTags.includes(selectedTag)
+      ? [...selectedTags].filter((tag) => tag !== selectedTag)
+      : [...selectedTags, selectedTag];
+
+    dispatch(updateProjectsFilteredTags(newSelectedTags));
+  };
 
   const AnimatedGrid = animated(Grid);
 
@@ -173,6 +200,29 @@ const Projects: NextPage = () => {
   return (
     <div className={styles.container}>
       <ProjectsHero />
+      <Box marginLeft="2rem">
+        <Typography variant="caption">project categories</Typography>
+        <div style={{ display: "flex", gap: "2rem" }}>
+          {projectTags.map((tag, index) => {
+            return (
+              <Box sx={{ display: "inline-flex" }}>
+                <Chip
+                  color={selectedTags.includes(tag) ? "primary" : "default"}
+                  onClick={() => handleTagSelect(tag)}
+                  label={<Typography variant="h6">{tag} </Typography>}
+                ></Chip>
+                {index < projectTags.length - 1 ? (
+                  <Typography variant="h6" marginLeft="2rem">
+                    |
+                  </Typography>
+                ) : (
+                  ""
+                )}
+              </Box>
+            );
+          })}
+        </div>
+      </Box>
       <Grid
         container
         columnSpacing="4rem"

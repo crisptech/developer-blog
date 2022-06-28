@@ -1,16 +1,22 @@
+import { Divider, Typography } from "@mui/material";
+import { Box, Container } from "@mui/system";
 import Image from "next/image";
 import React from "react";
+import GitHubCalendar from "react-github-calendar";
+import ResumeHero from "../components/resume-hero";
 
 const Resume = () => {
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <Image
-        src="/contributions.png"
-        objectFit="cover"
-        width="850px"
-        height="200px"
-      />
-    </div>
+    <Container sx={{ marginTop: "3rem" }}>
+      <ResumeHero />
+      <Divider sx={{ marginY: "2rem" }} />
+      <Typography variant="h5" marginBottom="1rem">
+        My 2021
+      </Typography>
+      <Box margin="2rem">
+        <GitHubCalendar username="crisptech" year={2021} />
+      </Box>
+    </Container>
   );
 };
 

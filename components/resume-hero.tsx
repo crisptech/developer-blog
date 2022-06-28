@@ -1,11 +1,10 @@
 import { Avatar, IconButton, Typography } from "@mui/material";
 import { Box, Container } from "@mui/system";
 import React, { useEffect } from "react";
-import DataObjectIcon from "@mui/icons-material/DataObject";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { animated, useSpring } from "react-spring";
 
-const ProjectsHero = () => {
+const ResumeHero = () => {
   const AnimatedContainer = animated(Container);
   const [state, toggle] = React.useState(false);
 
@@ -16,6 +15,7 @@ const ProjectsHero = () => {
   const animatedStyles = useSpring({
     from: { opacity: 0 },
     to: { opacity: 1 },
+    delay: 0,
     config: { duration: 600 },
     x: state ? 1 : 0,
   });
@@ -39,15 +39,16 @@ const ProjectsHero = () => {
           .to((x) => `translate3d(0, -${x}px, 0)`),
       }}
     >
-      <DataObjectIcon
-        sx={{ width: "48px", height: "48px", margin: "0.4rem" }}
+      <Avatar
+        src="/profile.jpg"
+        sx={{ width: "96px", height: "96px", margin: "0.4rem" }}
       />
       <Box sx={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-        <Typography variant="h5" sx={{ fontWeight: "fontWeightMedium" }}>
-          Personal projects
+        <Typography variant="h3" sx={{ fontWeight: "fontWeightMedium" }}>
+          Tom Crisp.
         </Typography>
         <Typography variant="body1">
-          Some of my personal and professional work.
+          Fullstack developer T-shaped developer.
         </Typography>
         <Typography variant="caption" color="text.secondary">
           source code {"   "}
@@ -69,4 +70,4 @@ const ProjectsHero = () => {
   );
 };
 
-export default ProjectsHero;
+export default ResumeHero;

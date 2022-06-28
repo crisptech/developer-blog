@@ -13,10 +13,10 @@ const IntroHero = () => {
   }, []);
 
   const animatedStyles = useSpring({
-    from: { opacity: 0, marginBottom: 800 },
-    to: { opacity: 1, marginBottom: 0 },
-    delay: 100,
-    config: { duration: 300 },
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 0,
+    config: { duration: 600 },
     x: state ? 1 : 0,
   });
 
@@ -30,7 +30,13 @@ const IntroHero = () => {
         alignItems: "center",
       }}
       style={{
-        ...animatedStyles,
+        opacity: animatedStyles.opacity.to({ range: [0.3, 1], output: [0, 1] }),
+        transform: animatedStyles.opacity
+          .to({
+            range: [0, 1],
+            output: [200, 0],
+          })
+          .to((x) => `translate3d(0, -${x}px, 0)`),
       }}
     >
       <Avatar
