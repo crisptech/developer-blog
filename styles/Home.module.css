@@ -1,7 +1,10 @@
 .container {
   padding: 0 2rem;
   margin-top: 2rem;
+  /* display: flex; */
+  flex-direction: row;
   flex-grow: 10;
+  overflow-x: hidden;
 }
 
 .main {

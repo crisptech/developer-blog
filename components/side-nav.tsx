@@ -64,13 +64,10 @@ const SideNav: React.FC<SideNavProps> = ({
   return (
     <Box
       sx={{
-        flexBasis: {
-          md: "400px",
-          sm: 0,
+        flex: {
+          md: "0 0 325px",
+          sm: "0 0 0",
         },
-        flexGrow: 3,
-        backgroundColor: "red",
-        flexGrow: flexGrow,
         zIndex: 10,
       }}
     >

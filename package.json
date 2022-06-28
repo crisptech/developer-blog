@@ -32,6 +32,7 @@
     "redux-logger": "^3.0.6"
   },
   "devDependencies": {
+    "@react-spring/types": "^9.4.5",
     "@types/markdown-it": "^12.2.3",
     "@types/node": "17.0.41",
     "@types/ramda": "^0.28.14",

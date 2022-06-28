@@ -1,9 +1,16 @@
 import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { NextPage } from "next";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  animated,
+  config,
+  InterpolatorArgs,
+  useTransition,
+} from "react-spring";
 import { wrapper } from "../app/store";
+import ProjectCard from "../components/project-card";
 import ProjectCardAlt from "../components/project-card-alt";
 import {
   getAllPostsData,
@@ -60,6 +67,8 @@ const projectCardSize: ProjectCardSizeType = {
 
 type ProjectWithSize = Project & {
   size: number;
+  op?: InterpolatorArgs<number, undefined>;
+  trans?: InterpolatorArgs<number, undefined>;
 };
 
 type Sizes = "sm" | "md" | "lg";
@@ -122,12 +131,44 @@ const getProjectCardsWithSizes = (projects: Project[]): ProjectWithSize[] => {
 
 const Projects: NextPage = () => {
   const projects = useSelector(selectVisibleProjects);
-  const projectsWithSizes = getProjectCardsWithSizes(projects);
+  const [projectsWithSizes, setProjectsWithSizes] = useState<ProjectWithSize[]>(
+    []
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(updateInitialLoad(false));
   }, []);
+
+  useEffect(() => {
+    setProjectsWithSizes(getProjectCardsWithSizes(projects));
+  }, [projects]);
+
+  const transitions = useTransition(projectsWithSizes, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    delay: 200,
+    config: config.molasses,
+  });
+
+  const AnimatedGrid = animated(Grid);
+  const AnimatedProjectCard = animated(ProjectCardAlt);
+
+  const getRandDisplacement = (): number => {
+    return Math.random() * 1500 + 1000;
+  };
+
+  const getRandomInRange = (min = 0, max = 100): number => {
+    let diff = max - min;
+
+    let rand = Math.random();
+
+    rand = Math.floor(rand * diff);
+
+    rand = rand + min;
+
+    return rand;
+  };
 
   return (
     <div className={styles.container}>
@@ -138,20 +179,27 @@ const Projects: NextPage = () => {
         spacing={3}
         justifyContent="space-around"
       >
-        {projectsWithSizes.map((projectWithSize) => {
-          return (
-            <Grid
-              item
-              sm={12}
-              md={6}
-              lg={projectWithSize.size}
-              justifyContent="center"
-              alignItems="center"
-            >
-              <ProjectCardAlt projectData={projectWithSize} />
-            </Grid>
-          );
-        })}
+        {transitions(({ opacity }, projectWithSize) => (
+          <AnimatedGrid
+            item
+            sm={12}
+            md={6}
+            lg={projectWithSize.size}
+            justifyContent="center"
+            alignItems="center"
+            style={{
+              opacity: opacity.to({ output: [0.4, 1.2] }),
+              transform: opacity
+                .to({
+                  range: [getRandomInRange(0.5, 0.6), 1],
+                  output: [getRandDisplacement(), 0],
+                })
+                .to((x) => `translate3d(${x}px,0,0)`),
+            }}
+          >
+            <ProjectCardAlt projectData={projectWithSize} />
+          </AnimatedGrid>
+        ))}
       </Grid>
     </div>
   );
