@@ -1,4 +1,7 @@
-type School = "University of Southampton" | "University of Birmingham";
+type School =
+  | "University of Southampton"
+  | "University of Birmingham"
+  | "Birmingham Metropolitan College";
 
 type EducationEntry = {
   [school in School]: {
@@ -16,9 +19,21 @@ type EducationEntry = {
 };
 
 export const education: EducationEntry = {
+  "Birmingham Metropolitan College": {
+    school: "Birmingham Metropolitan College",
+    degree: "A-Levels",
+    degreeLevel:
+      "Mathematics, Further Mathematics, Computer Science, Physics, Business",
+    dates: "2012-2014",
+    grade: {
+      classification:
+        "Maths: A*, FM: A, Computer Science: A, Physics: A, Business: A",
+      percentage: 100,
+    },
+  },
   "University of Southampton": {
     school: "University of Southampton",
-    degree: "Mechanical Engineer, Computational Modelling",
+    degree: "Mechanical Engineering, Computational Modelling",
     degreeLevel: "BSc",
     dates: "2014-2017",
     grade: { classification: "Upper first class", percentage: 76 },

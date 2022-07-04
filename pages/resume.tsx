@@ -1,4 +1,4 @@
-import { Star } from "@mui/icons-material";
+import { GitHub, Star } from "@mui/icons-material";
 import { Divider, Grid, Typography } from "@mui/material";
 import { yellow } from "@mui/material/colors";
 import { Box, Container } from "@mui/system";
@@ -7,6 +7,8 @@ import GitHubCalendar from "react-github-calendar";
 import ResumeHero from "../components/resume-hero";
 import { experience } from "../config/resume/experience";
 import { skills } from "../config/resume/skills";
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import { education } from "../config/resume/education";
 
 const Resume = () => {
   return (
@@ -25,7 +27,9 @@ const Resume = () => {
           <Box
             sx={{ display: "flex", marginX: "10%", flexDirection: "column" }}
           >
-            <Typography variant="h5">Introduction:</Typography>
+            <Typography fontWeight="fontWeightMedium" variant="h4">
+              Introduction:
+            </Typography>
             <Typography variant="body1">
               I am an enthusiastic, self-motivated, reliable, responsible and
               hard working person. I am a mature team worker and adaptable to
@@ -44,9 +48,17 @@ const Resume = () => {
           margin="2rem"
         >
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography variant="h5" marginBottom="1rem">
-              My 2021
-            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                gap: "0.75rem",
+                alignItems: "center",
+                marginBottom: "1rem",
+              }}
+            >
+              <Typography variant="h5">My 2021</Typography>
+              <GitHub />
+            </Box>
             <GitHubCalendar username="crisptech" year={2021} />
           </Box>
         </Box>
@@ -58,9 +70,13 @@ const Resume = () => {
           }}
           margin="2rem"
         >
-          <Grid container spacing={2} width="100%">
+          <Grid container spacing={2} wrap="nowrap" width="80%">
             <Grid item sx={{ flexGrow: 3 }}>
-              <Typography variant="h5" marginBottom="1rem">
+              <Typography
+                variant="h4"
+                fontWeight="fontWeightMedium"
+                marginBottom="1rem"
+              >
                 Experience
               </Typography>
               <Box>
@@ -75,14 +91,41 @@ const Resume = () => {
                     );
                   })}
               </Box>
+              <Divider sx={{ margin: "2rem" }} />
+              <Typography
+                variant="h4"
+                fontWeight="fontWeightMedium"
+                marginBottom="1rem"
+              >
+                Education
+              </Typography>
+              <Box>
+                {Object.keys(education)
+                  .reverse()
+                  .map((school) => {
+                    return (
+                      <Box key={school} sx={{ paddingY: "0.75rem" }}>
+                        <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                          <Typography variant="h5">{school}</Typography>{" "}
+                          <Typography variant="h6">
+                            - {education[school].dates}
+                          </Typography>
+                        </Box>
+                        <Typography variant="h6" color="inherit">
+                          {education[school].degree}
+                        </Typography>
+                      </Box>
+                    );
+                  })}
+              </Box>
             </Grid>
             <Grid item sx={{ flexGrow: 1 }}>
               <Typography
-                sx={{ textAlign: "end" }}
-                variant="h5"
+                sx={{ textAlign: "end", fontWeight: "fontWeightMedium" }}
+                variant="h4"
                 marginBottom="1rem"
               >
-                Skills
+                My Skills
               </Typography>
               <Box>
                 {Object.keys(skills).map((category) => {
@@ -93,22 +136,46 @@ const Resume = () => {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "flex-end",
+                        marginBottom: "1rem",
                       }}
                     >
-                      <Typography variant="body2">{category}</Typography>
+                      <Typography
+                        variant="body2"
+                        fontWeight="fontWeightMedium"
+                        marginBottom="0.3rem"
+                      >
+                        {category}
+                      </Typography>
                       {Object.keys(skills[category]).map((skill) => (
-                        <Box sx={{ display: "flex" }} key={skill}>
-                          <Box>
-                            <Typography variant="caption">{skill}</Typography>
-                            {[...new Array(skills[category][skill])].map(
-                              (a, index) => (
-                                <Star
-                                  fontSize="inherit"
-                                  key={`${skill}-star-${index}`}
-                                  sx={{ color: yellow[500] }}
-                                />
-                              )
-                            )}
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            marginBottom: "0.2rem",
+                          }}
+                          key={skill}
+                        >
+                          <Box sx={{ display: "flex", alignItems: "center" }}>
+                            <Typography paddingRight="0.3rem" variant="caption">
+                              {skill}
+                            </Typography>
+                            {[...new Array(3)].map((a, index) => (
+                              <>
+                                {index <= skills[category][skill] - 1 ? (
+                                  <Star
+                                    fontSize="inherit"
+                                    key={`${skill}-star-${index}`}
+                                    sx={{ color: yellow[700] }}
+                                  />
+                                ) : (
+                                  <StarBorderIcon
+                                    fontSize="inherit"
+                                    key={`${skill}-star-${index}`}
+                                    sx={{ color: yellow[700] }}
+                                  />
+                                )}
+                              </>
+                            ))}
                           </Box>
                         </Box>
                       ))}
